@@ -26,7 +26,6 @@ Partial Class FrmHeure
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmHeure))
         Me.lbl_hour = New System.Windows.Forms.Label()
         Me.grBWorkHour = New System.Windows.Forms.GroupBox()
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.worked_min_to = New System.Windows.Forms.TextBox()
         Me.worked_min_from = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -40,6 +39,9 @@ Partial Class FrmHeure
         Me.tb_comment = New System.Windows.Forms.TextBox()
         Me.btn_save = New System.Windows.Forms.Button()
         Me.errProv = New System.Windows.Forms.ErrorProvider(Me.components)
+        Me.lbl_cat = New System.Windows.Forms.Label()
+        Me.cbCategories = New System.Windows.Forms.ComboBox()
+        Me.btn_return = New System.Windows.Forms.Button()
         Me.grBWorkHour.SuspendLayout()
         CType(Me.errProv, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -55,7 +57,8 @@ Partial Class FrmHeure
         '
         'grBWorkHour
         '
-        Me.grBWorkHour.Controls.Add(Me.Button1)
+        Me.grBWorkHour.Controls.Add(Me.cbCategories)
+        Me.grBWorkHour.Controls.Add(Me.lbl_cat)
         Me.grBWorkHour.Controls.Add(Me.worked_min_to)
         Me.grBWorkHour.Controls.Add(Me.worked_min_from)
         Me.grBWorkHour.Controls.Add(Me.Label3)
@@ -74,15 +77,6 @@ Partial Class FrmHeure
         Me.grBWorkHour.TabIndex = 2
         Me.grBWorkHour.TabStop = False
         Me.grBWorkHour.Text = "GroupBox1"
-        '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(382, 108)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 11
-        Me.Button1.Text = "Button1"
-        Me.Button1.UseVisualStyleBackColor = True
         '
         'worked_min_to
         '
@@ -184,7 +178,7 @@ Partial Class FrmHeure
         '
         Me.btn_save.Image = CType(resources.GetObject("btn_save.Image"), System.Drawing.Image)
         Me.btn_save.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btn_save.Location = New System.Drawing.Point(610, 391)
+        Me.btn_save.Location = New System.Drawing.Point(137, 425)
         Me.btn_save.Name = "btn_save"
         Me.btn_save.Size = New System.Drawing.Size(93, 28)
         Me.btn_save.TabIndex = 3
@@ -196,11 +190,42 @@ Partial Class FrmHeure
         Me.errProv.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink
         Me.errProv.ContainerControl = Me
         '
+        'lbl_cat
+        '
+        Me.lbl_cat.AutoSize = True
+        Me.lbl_cat.Location = New System.Drawing.Point(10, 170)
+        Me.lbl_cat.Name = "lbl_cat"
+        Me.lbl_cat.Size = New System.Drawing.Size(51, 13)
+        Me.lbl_cat.TabIndex = 12
+        Me.lbl_cat.Text = " Activité :"
+        '
+        'cbCategories
+        '
+        Me.cbCategories.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbCategories.FormattingEnabled = True
+        Me.cbCategories.Location = New System.Drawing.Point(92, 167)
+        Me.cbCategories.Name = "cbCategories"
+        Me.cbCategories.Size = New System.Drawing.Size(121, 21)
+        Me.cbCategories.Sorted = True
+        Me.cbCategories.TabIndex = 13
+        '
+        'btn_return
+        '
+        Me.btn_return.Image = CType(resources.GetObject("btn_return.Image"), System.Drawing.Image)
+        Me.btn_return.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btn_return.Location = New System.Drawing.Point(38, 425)
+        Me.btn_return.Name = "btn_return"
+        Me.btn_return.Size = New System.Drawing.Size(93, 28)
+        Me.btn_return.TabIndex = 4
+        Me.btn_return.Text = "Retour"
+        Me.btn_return.UseVisualStyleBackColor = True
+        '
         'FrmHeure
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(715, 431)
+        Me.ClientSize = New System.Drawing.Size(779, 457)
+        Me.Controls.Add(Me.btn_return)
         Me.Controls.Add(Me.btn_save)
         Me.Controls.Add(Me.grBWorkHour)
         Me.Name = "FrmHeure"
@@ -226,5 +251,7 @@ Partial Class FrmHeure
     Friend WithEvents worked_hour_from As System.Windows.Forms.TextBox
     Friend WithEvents worked_min_to As System.Windows.Forms.TextBox
     Friend WithEvents worked_min_from As System.Windows.Forms.TextBox
-    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents lbl_cat As System.Windows.Forms.Label
+    Friend WithEvents cbCategories As System.Windows.Forms.ComboBox
+    Friend WithEvents btn_return As System.Windows.Forms.Button
 End Class

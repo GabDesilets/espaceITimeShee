@@ -100,7 +100,7 @@
     <Compile Include="ListeHeures.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Module1.vb" />
+    <Compile Include="mOperations.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

@@ -3,6 +3,15 @@ Public Class FrmHeure
     Public cn As MySqlConnection = New MySqlConnection("Data Source=localhost;Database=sitemeut_espace-i2;User ID=root;Password=toor;")
     Private Sub FrmHeure_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         dtp_date.Value = DateTime.Now
+        Dim dCats As New Dictionary(Of Integer, String)
+        dCats = getCategories()
+
+        
+        cbCategories.DataSource = New BindingSource(dCats, Nothing)
+        cbCategories.DisplayMember = "Value"
+        cbCategories.ValueMember = "Key"
+        ' AddHandler  cbCategories.SelectedIndexChanged += New EventHandler(AddressOf cbCategories_SelectedIndexChanged)
+     
     End Sub
 
     Private Sub setDayOfWeek()
@@ -20,51 +29,30 @@ Public Class FrmHeure
     End Sub
 
     Private Sub btn_save_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_save.Click
-        'TODO MAKE A REAL SAVE FUNCTION AND CALL HER HERE AND CHECK IF UPDATE OR REAL INSERT !!
         If _run_validation() Then
-            tb_comment.Text = If(Not tb_comment.Text = Nothing, tb_comment.Text, "")
+            Dim categorieId As String
+            Dim dataToInsert As New Dictionary(Of String, String)
             Dim d As String = Format(dtp_date.Value, "yyyy-MM-dd")
-            Dim Query As String
-            Dim worked_hours As Decimal
+
+            categorieId = DirectCast(cbCategories.SelectedItem, KeyValuePair(Of Integer, String)).Key
+            tb_comment.Text = If(Not tb_comment.Text = Nothing, tb_comment.Text, "")
+
+            dataToInsert.Add("comment", tb_comment.Text)
+            dataToInsert.Add("work_day", d)
+            dataToInsert.Add("categorie_id", categorieId)
+
             Dim workedHours(,) As Integer = New Integer(,) {
                 {CInt(worked_hour_from.Text), CInt(worked_min_from.Text)},
                 {CInt(worked_hour_to.Text), CInt(worked_min_to.Text)}}
 
-
-            worked_hours = getWorkedHours(workedHours)
-            Query = "INSERT INTO temps_travail VALUES(NULL," & 7 & ",'" & d & "'," & worked_hours & "," & workedHours(0, 0) & "," & workedHours(0, 1) & "," & workedHours(1, 0) & "," & workedHours(1, 1) & ",'" & tb_comment.Text & "')"
-            cn.Open()
-            Debug.WriteLine(Query)
-            Dim cmd As MySqlCommand = New MySqlCommand(Query, cn)
-
-            Dim i As Integer = cmd.ExecuteNonQuery()
-            If (i > 0) Then
-                MessageBox.Show("Record is Successfully Inserted")
-                resetForm()
-            Else
-                MessageBox.Show("Record is not Inserted")
-            End If
-            cn.Close()
+            saveTime(dataToInsert, workedHours)
+            resetForm()
         Else
             Exit Sub
         End If
-
-
     End Sub
 
-    Private Function getWorkedHours(ByVal hours(,) As Integer)
-        Dim hourTot As Integer
-        Dim minTot As Decimal
-
-        If hours(1, 1) < hours(0, 1) Then
-            minTot = (60 - Math.Abs(hours(1, 1) - hours(0, 1))) / 100
-            hourTot = (hours(1, 0) - hours(0, 0)) - 1
-        Else
-            minTot = (hours(1, 1) - hours(0, 1)) / 100
-            hourTot = hours(1, 0) - hours(0, 0)
-        End If
-        Return hourTot + minTot
-    End Function
+   
     Private Sub resetForm()
         For Each ctrl In grBWorkHour.Controls
             If TypeOf ctrl Is Label Then
@@ -100,10 +88,11 @@ Public Class FrmHeure
             End If
         Next
     End Sub
+
     Private Function _run_validation()
         Dim allGood As Boolean = True
         For Each ctrl In grBWorkHour.Controls
-            If TypeOf ctrl Is TextBox And ctrl.name.ToString IsNot "tb_comment" Then
+            If TypeOf ctrl Is TextBox And IsNothing(ctrl.text) And ctrl.name.ToString IsNot "tb_comment" Then
                 errProv.SetError(ctrl, "Ce champs ne peut pas etre vide")
                 allGood = False
             End If
@@ -126,4 +115,14 @@ Public Class FrmHeure
         End If
     End Sub
 
+    Private Sub cbCategories_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbCategories.SelectedIndexChanged
+        Dim _key As Integer = DirectCast(cbCategories.SelectedItem, KeyValuePair(Of Integer, String)).Key
+        Dim _value As String = DirectCast(cbCategories.SelectedItem, KeyValuePair(Of Integer, String)).Value
+        ' MessageBox.Show([String].Format("Use selection of dictionary is:" & vbLf & "Key: {0}" & vbLf & "Value: {1}", _key, _value))
+    End Sub
+
+    Private Sub btn_return_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_return.Click
+        Me.Dispose()
+        ListeHeures.Show()
+    End Sub
 End Class

@@ -137,4 +137,15 @@
   <metadata name="errProv.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="btn_return.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAZdEVYdFNvZnR3YXJlAEFkb2JlIEltYWdlUmVhZHlxyWU8AAABEklEQVQ4T81Tu2pCQRA9/5Ii
+        H+AXBB/XR9TGHxDiH6QVsYh54KNX8QGBFGkEKwvBQokoEm8RoreID0J+42RmQQjBKxdu48Bhd2b3nJmd
+        YUESfuCLrInPQCBdA1KC6woQK4OyOupr3AsMOV4Ggvfg+vuZ4UcwIWLJ6mmk5FwTQC8rebltsDUC86/g
+        VQkMSSz0cBxhiVtPptoeorKZfpXYnID1Mfi2ueF0m+Vs5475Pkv7J0flGoGhc8vmQgTmMGv7Hews3dG1
+        wZcPMKYCYgEtt/+ZY2cFFgZStjwhomVKP9ygZKuIkWmiikREpOdkaAlRfY+4MJ08iCRkjNE72F7Gd7hj
+        0v8xzXz5P3jS9/ORzuMv/AKIThffqS4h/gAAAABJRU5ErkJggg==
+</value>
+  </data>
 </root>

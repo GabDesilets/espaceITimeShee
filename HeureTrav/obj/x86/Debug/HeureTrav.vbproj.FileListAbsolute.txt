@@ -22,3 +22,15 @@ C:\Users\Gabriel\Desktop\Cegep\VB\HeureTrav\HeureTrav\obj\x86\Debug\HeureTrav.xm
 C:\Users\Gabriel\Desktop\Cegep\VB\HeureTrav\HeureTrav\obj\x86\Debug\HeureTrav.pdb
 C:\Users\Gabriel\Desktop\Cegep\VB\HeureTrav\HeureTrav\obj\x86\Debug\FrmHeureTrav.FrmHeure.resources
 C:\Users\Gabriel\Desktop\Cegep\VB\HeureTrav\HeureTrav\obj\x86\Debug\FrmHeureTrav.ListeHeures.resources
+C:\Users\Gabriel\Desktop\Cegep\VB\espaceITimeShee\HeureTrav\obj\x86\Debug\HeureTrav.exe
+C:\Users\Gabriel\Desktop\Cegep\VB\espaceITimeShee\HeureTrav\obj\x86\Debug\HeureTrav.xml
+C:\Users\Gabriel\Desktop\Cegep\VB\espaceITimeShee\HeureTrav\obj\x86\Debug\HeureTrav.pdb
+C:\Users\Gabriel\Desktop\Cegep\VB\espaceITimeShee\HeureTrav\bin\Debug\HeureTrav.exe
+C:\Users\Gabriel\Desktop\Cegep\VB\espaceITimeShee\HeureTrav\bin\Debug\HeureTrav.pdb
+C:\Users\Gabriel\Desktop\Cegep\VB\espaceITimeShee\HeureTrav\bin\Debug\HeureTrav.xml
+C:\Users\Gabriel\Desktop\Cegep\VB\espaceITimeShee\HeureTrav\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Gabriel\Desktop\Cegep\VB\espaceITimeShee\HeureTrav\obj\x86\Debug\FrmHeureTrav.FrmHeure.resources
+C:\Users\Gabriel\Desktop\Cegep\VB\espaceITimeShee\HeureTrav\obj\x86\Debug\FrmHeureTrav.ListeHeures.resources
+C:\Users\Gabriel\Desktop\Cegep\VB\espaceITimeShee\HeureTrav\obj\x86\Debug\FrmHeureTrav.Resources.resources
+C:\Users\Gabriel\Desktop\Cegep\VB\espaceITimeShee\HeureTrav\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Gabriel\Desktop\Cegep\VB\espaceITimeShee\HeureTrav\obj\x86\Debug\GenerateResource.write.1.tlog
