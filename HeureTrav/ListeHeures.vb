@@ -41,11 +41,8 @@ Public Class ListeHeures
     End Sub
 
     Private Sub btn_delete_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_delete.Click
-        Dim student As ListViewItem
-        For Each student In lvStudent.Items
-            If student.Selected = True Then
-                MsgBox(student.Tag)
-            End If
-        Next
+        ' TODO id de la row much?
+        db.Command("DELETE FROM temps_travail WHERE etu_id = @0", lvStudent.SelectedItems(0).Tag)
+        lvStudent.Items.Remove(lvStudent.SelectedItems(0))
     End Sub
 End Class

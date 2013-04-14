@@ -7,7 +7,7 @@ Module mOperations
 
         db.Command(
             "INSERT INTO temps_travail (etu_id, work_day,worked_hours, from_hour,to_hour,from_min,to_min,comment,categorie_id) " &
-            "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            "VALUES(@0, @1, @2, @3, @4, @5, @6, @7, @8)",
             3,
             data.Item("work_day"),
             getWorkedHours(hours),
@@ -41,12 +41,13 @@ Module mOperations
             categories.Add(CInt(reader("id")), CStr(reader("name")))
         End While
 
+        reader.Close()
         Return categories
     End Function
 
     Public Sub deleteStudentTime(ByVal studentId As Integer)
         db.Command(
-            "DELETE FROM temps_travail WHERE etu_id = ?", studentId
+            "DELETE FROM temps_travail WHERE etu_id = @0", studentId
             )
     End Sub
 
