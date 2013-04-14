@@ -1,16 +1,23 @@
 ﻿Imports MySql.Data.MySqlClient
 Module mOperations
-    Public cn As MySqlConnection = New MySqlConnection("Data Source=localhost;Database=sitemeut_espace-i2;User ID=root;Password=toor;")
+    Public db As MySqlDB = New MySqlDB("Data Source=localhost;Database=sitemeut_espace-i2;User ID=root;Password=toor;")
 
     Public Sub saveTime(ByVal data As Dictionary(Of String, String), ByVal hours(,) As Integer)
         Dim workedHours = getWorkedHours(hours)
 
-        cn.Open()
-
-        ' v syntax error without this thing. dont f*cking ask
-        Dim vbneedsthis = (New MySqlCommand("INSERT INTO temps_travail (etu_id, work_day,worked_hours, from_hour,to_hour,from_min,to_min,comment,categorie_id) ", cn)).ExecuteNonQuery()
-
-        cn.Close()
+        db.Command(
+            "INSERT INTO temps_travail (etu_id, work_day,worked_hours, from_hour,to_hour,from_min,to_min,comment,categorie_id) " &
+            "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            3,
+            data.Item("work_day"),
+            getWorkedHours(hours),
+            hours(0, 0),
+            hours(1, 0),
+            hours(0, 1),
+            hours(1, 1),
+            data.Item("comment"),
+            data.Item("categorie_id")
+            )
     End Sub
 
     Private Function getWorkedHours(ByVal hours(,) As Integer) As Decimal
@@ -27,27 +34,20 @@ Module mOperations
     End Function
 
     Public Function getCategories() As Dictionary(Of Integer, String)
-        cn.Open()
-
         Dim categories As New Dictionary(Of Integer, String)
-        Dim reader As MySqlDataReader = (New MySqlCommand("Select id,name from work_categories", cn)).ExecuteReader()
+        Dim reader = db.Query("Select id,name from work_categories")
 
         While reader.Read()
             categories.Add(CInt(reader("id")), CStr(reader("name")))
         End While
 
-        cn.Close()
-
         Return categories
     End Function
 
     Public Sub deleteStudentTime(ByVal studentId As Integer)
-        cn.Open()
-
-        ' v syntax error without this thing. dont f*cking ask
-        Dim vbneedsthis = (New MySqlCommand("DELETE FROM temps_travail WHERE etu_id =  " & studentId, cn)).ExecuteNonQuery()
-
-        cn.Close()
+        db.Command(
+            "DELETE FROM temps_travail WHERE etu_id = ?", studentId
+            )
     End Sub
 
 End Module
