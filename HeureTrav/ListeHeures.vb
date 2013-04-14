@@ -19,7 +19,7 @@ Public Class ListeHeures
                 CStr(r.GetValue(4))
             })
             'hidden value , purpose : store the uid will be usefull later for update
-            i.Tag = r.GetValue(4)
+            i.Tag = r.GetValue(5)
 
             lvStudent.Items.Add(i)
         Loop
@@ -38,5 +38,14 @@ Public Class ListeHeures
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
         Me.Close()
         FrmHeure.Show()
+    End Sub
+
+    Private Sub btn_delete_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_delete.Click
+        Dim student As ListViewItem
+        For Each student In lvStudent.Items
+            If student.Selected = True Then
+                MsgBox(student.Tag)
+            End If
+        Next
     End Sub
 End Class

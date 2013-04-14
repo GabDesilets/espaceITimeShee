@@ -123,7 +123,8 @@ Public Class FrmHeure
     End Sub
 
     Private Sub btn_return_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_return.Click
-        Me.Close()
+        resetForm()
+        Me.Hide()
         ListeHeures.Show()
     End Sub
 End Class

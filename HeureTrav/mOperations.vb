@@ -44,5 +44,10 @@ Module mOperations
         Return categories
     End Function
 
+    Public Sub deleteStudentTime(ByVal studentId As Integer)
+        db.Command(
+            "DELETE FROM temps_travail WHERE etu_id = ?", studentId
+            )
+    End Sub
 
 End Module
