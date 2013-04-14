@@ -1,12 +1,11 @@
 ﻿Imports MySql.Data.MySqlClient
 Public Class FrmHeure
-    Public cn As MySqlConnection = New MySqlConnection("Data Source=localhost;Database=sitemeut_espace-i2;User ID=root;Password=toor;")
+    Public db As MySqlDB = New MySqlDB("Data Source=localhost;Database=sitemeut_espace-i2;User ID=root;Password=toor;")
+
     Private Sub FrmHeure_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         dtp_date.Value = DateTime.Now
-        Dim dCats As New Dictionary(Of Integer, String)
-        dCats = getCategories()
+        Dim dCats = getCategories()
 
-        
         cbCategories.DataSource = New BindingSource(dCats, Nothing)
         cbCategories.DisplayMember = "Value"
         cbCategories.ValueMember = "Key"
