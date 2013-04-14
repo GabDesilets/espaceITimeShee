@@ -35,9 +35,34 @@ Public Class ListeHeures
     End Sub
 
 
-    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
-        Me.Close()
+    Private Sub btn_add_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_add.Click
+        Me.Hide()
         FrmHeure.Show()
+    End Sub
+
+
+    Private Sub btn_mod_Click(sender As Object, e As EventArgs) Handles btn_mod.Click
+        If lvStudent.SelectedIndices.Count <= 0 Then
+            Return
+        End If
+
+        Me.Hide()
+        FrmHeure.Show()
+
+        Dim row = lvStudent.SelectedItems(0)
+        Dim time_from, time_to As String()
+
+        FrmHeure.dtp_date.Value = CDate(row.SubItems(0).Text)
+
+        time_from = row.SubItems(1).Text.Split(":"c)
+        FrmHeure.worked_hour_from.Text = time_from(0)
+        FrmHeure.worked_min_from.Text = time_from(1)
+
+        time_to = row.SubItems(2).Text.Split(":"c)
+        FrmHeure.worked_hour_to.Text = time_to(0)
+        FrmHeure.worked_min_to.Text = time_to(1)
+
+        FrmHeure.tb_comment.Text = row.SubItems(4).Text
     End Sub
 
     Private Sub btn_delete_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_delete.Click
