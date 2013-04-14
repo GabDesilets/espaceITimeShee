@@ -98,6 +98,7 @@
     <Compile Include="FrmHeure.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="hoursManagement.vb" />
     <Compile Include="ListeHeures.Designer.vb">
       <DependentUpon>ListeHeures.vb</DependentUpon>
     </Compile>
