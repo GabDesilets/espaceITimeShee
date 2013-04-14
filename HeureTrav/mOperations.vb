@@ -41,5 +41,13 @@ Module mOperations
         Return categories
     End Function
 
+    Public Sub deleteStudentTime(ByVal studentId As Integer)
+        cn.Open()
+
+        ' v syntax error without this thing. dont f*cking ask
+        Dim vbneedsthis = (New MySqlCommand("DELETE FROM temps_travail WHERE etu_id =  " & studentId, cn)).ExecuteNonQuery()
+
+        cn.Close()
+    End Sub
 
 End Module
