@@ -34,8 +34,11 @@ Public Class FrmHeure
             Dim dataToInsert As New Dictionary(Of String, String)
             Dim d As String = Format(dtp_date.Value, "yyyy-MM-dd")
 
-            categorieId = DirectCast(cbCategories.SelectedItem, KeyValuePair(Of Integer, String)).Key
-            tb_comment.Text = If(Not tb_comment.Text = Nothing, tb_comment.Text, "")
+            categorieId = DirectCast(cbCategories.SelectedItem, KeyValuePair(Of Integer, String)).Key.ToString()
+
+            If Not tb_comment.Text = Nothing Then
+                tb_comment.Text = ""
+            End If
 
             dataToInsert.Add("comment", tb_comment.Text)
             dataToInsert.Add("work_day", d)
@@ -54,7 +57,7 @@ Public Class FrmHeure
 
    
     Private Sub resetForm()
-        For Each ctrl In grBWorkHour.Controls
+        For Each ctrl As Control In grBWorkHour.Controls
             If TypeOf ctrl Is Label Then
                 Continue For
             End If
@@ -68,61 +71,60 @@ Public Class FrmHeure
             End If
             'Clearing Selected RadioButton 
             If TypeOf ctrl Is RadioButton Then
-                ctrl.ClearSelection()
+                CType(ctrl, RadioButton).Checked = False
             End If
             'Clearing selected ListBox
             If TypeOf ctrl Is ListBox Then
-                ctrl.ClearSelection()
+                CType(ctrl, ListBox).ClearSelected()
             End If
             'Clearing selected CheckBox
             If TypeOf ctrl Is CheckBox Then
-                ctrl.Checked = False
+                CType(ctrl, CheckBox).Checked = False
             End If
             'Clearing selected combobox
             If TypeOf ctrl Is ComboBox Then
-                ctrl.selectedIndex = 0
+                CType(ctrl, ComboBox).SelectedIndex = 0
             End If
 
             If TypeOf ctrl Is DateTimePicker Then
-                ctrl.value = DateTime.Now
+                CType(ctrl, DateTimePicker).Value = DateTime.Now
             End If
         Next
     End Sub
 
-    Private Function _run_validation()
-        Dim allGood As Boolean = True
-        For Each ctrl In grBWorkHour.Controls
-            If TypeOf ctrl Is TextBox And IsNothing(ctrl.text) And ctrl.name.ToString IsNot "tb_comment" Then
-                errProv.SetError(ctrl, "Ce champs ne peut pas etre vide")
-                allGood = False
+    Private Function _run_validation() As Boolean
+        For Each ctrl As Control In grBWorkHour.Controls
+            If TypeOf ctrl Is TextBox And IsNothing(ctrl.Text) And ctrl.Name.ToString IsNot "tb_comment" Then
+                errProv.SetError(ctrl, "Ce champ ne peut pas etre vide")
+                Return False
             End If
         Next
-        Return allGood
+
+        Return True
     End Function
 
     Private Sub worked_from_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles worked_hour_from.KeyPress, worked_hour_to.KeyPress, worked_min_from.KeyPress, worked_min_to.KeyPress
-        If IsNumeric(e.KeyChar) Or Asc(e.KeyChar) = 46 Or Asc(e.KeyChar) = 8 Then
-            e.Handled = False
-        Else
-            e.Handled = True
-        End If
-    
+        e.Handled = Not (IsNumeric(e.KeyChar) Or Asc(e.KeyChar) = 46 Or Asc(e.KeyChar) = 8)
     End Sub
 
     Private Sub worked_hour_from_KeyUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles worked_hour_from.KeyUp, worked_hour_to.KeyUp, worked_min_from.KeyUp, worked_min_to.KeyUp
-        If sender.text.ToString.Length > 1 Then
-            grBWorkHour.SelectNextControl(sender, True, True, True, True)
+        Dim ctrl As Control = CType(sender, Control)
+
+        If ctrl.Text.ToString.Length > 1 Then
+            grBWorkHour.SelectNextControl(ctrl, True, True, True, True)
         End If
     End Sub
 
     Private Sub cbCategories_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbCategories.SelectedIndexChanged
-        Dim _key As Integer = DirectCast(cbCategories.SelectedItem, KeyValuePair(Of Integer, String)).Key
-        Dim _value As String = DirectCast(cbCategories.SelectedItem, KeyValuePair(Of Integer, String)).Value
+        ' might aswell comment everything...
+
+        ' Dim _key As Integer = DirectCast(cbCategories.SelectedItem, KeyValuePair(Of Integer, String)).Key
+        ' Dim _value As String = DirectCast(cbCategories.SelectedItem, KeyValuePair(Of Integer, String)).Value
         ' MessageBox.Show([String].Format("Use selection of dictionary is:" & vbLf & "Key: {0}" & vbLf & "Value: {1}", _key, _value))
     End Sub
 
     Private Sub btn_return_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_return.Click
-        Me.Dispose()
+        Me.Close()
         ListeHeures.Show()
     End Sub
 End Class
