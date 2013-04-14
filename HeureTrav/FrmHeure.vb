@@ -91,14 +91,16 @@ Public Class FrmHeure
     End Sub
 
     Private Function _run_validation() As Boolean
+        Dim ok = True
+
         For Each ctrl As Control In grBWorkHour.Controls
             If TypeOf ctrl Is TextBox And IsNothing(ctrl.Text) And ctrl.Name.ToString IsNot "tb_comment" Then
                 errProv.SetError(ctrl, "Ce champ ne peut pas etre vide")
-                Return False
+                ok = False
             End If
         Next
 
-        Return True
+        Return ok
     End Function
 
     Private Sub worked_from_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles worked_hour_from.KeyPress, worked_hour_to.KeyPress, worked_min_from.KeyPress, worked_min_to.KeyPress
