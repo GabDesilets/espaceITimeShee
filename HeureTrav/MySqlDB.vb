@@ -12,14 +12,18 @@ Public Class MySqlDB
 
     Public Function Query(qs As String, ParamArray p() As Object) As MySqlDataReader
         Dim q = New MySqlCommand(qs, conn)
-        q.Parameters.AddRange(p)
+        For i As Integer = 0 To p.Count - 1
+            q.Parameters.AddWithValue(i.ToString(), p(i))
+        Next
 
         Return q.ExecuteReader()
     End Function
 
     Public Function Command(qs As String, ParamArray p() As Object) As Integer
         Dim q = New MySqlCommand(qs, conn)
-        q.Parameters.AddRange(p)
+        For i As Integer = 0 To p.Count - 1
+            q.Parameters.AddWithValue(i.ToString(), p(i))
+        Next
 
         Return q.ExecuteNonQuery()
     End Function

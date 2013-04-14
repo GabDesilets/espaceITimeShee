@@ -15,8 +15,7 @@ Public Class FrmHeure
 
     Private Sub setDayOfWeek()
         Dim myDate As Date = DateTime.Today
-        Dim dayDiff As Integer = myDate.DayOfWeek - DayOfWeek.Monday
-        Dim currentDay As Date = myDate.AddDays(-dayDiff) 'Monday
+        Dim currentDay As Date = myDate.AddDays(DayOfWeek.Monday - myDate.DayOfWeek)
         Dim d As String
 
         For i = 1 To 7
