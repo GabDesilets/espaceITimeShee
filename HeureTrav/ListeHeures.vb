@@ -45,4 +45,8 @@ Public Class ListeHeures
         db.Command("DELETE FROM temps_travail WHERE etu_id = @0", lvStudent.SelectedItems(0).Tag)
         lvStudent.Items.Remove(lvStudent.SelectedItems(0))
     End Sub
+
+    Private Sub ListeHeures_Closed() Handles Me.FormClosed
+        FrmHeure.Close()
+    End Sub
 End Class
