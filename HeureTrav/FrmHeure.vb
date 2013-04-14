@@ -4,9 +4,8 @@ Public Class FrmHeure
     Public worksHours As hoursManagement = New hoursManagement()
     Private Sub FrmHeure_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         dtp_date.Value = DateTime.Now
-        Dim dCats = getCategories()
 
-        cbCategories.DataSource = New BindingSource(dCats, Nothing)
+        cbCategories.DataSource = New BindingSource(getCategories(), Nothing)
         cbCategories.DisplayMember = "Value"
         cbCategories.ValueMember = "Key"
         ' AddHandler  cbCategories.SelectedIndexChanged += New EventHandler(AddressOf cbCategories_SelectedIndexChanged)
@@ -27,64 +26,44 @@ Public Class FrmHeure
     End Sub
 
     Private Sub btn_save_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_save.Click
-        If _run_validation() Then
-            Dim categorieId As String
-            Dim dataToInsert As New Dictionary(Of String, String)
-            Dim d As String = Format(dtp_date.Value, "yyyy-MM-dd")
-
-            categorieId = DirectCast(cbCategories.SelectedItem, KeyValuePair(Of Integer, String)).Key.ToString()
-
-            If Not tb_comment.Text = Nothing Then
-                tb_comment.Text = ""
-            End If
-
-            dataToInsert.Add("comment", tb_comment.Text)
-            dataToInsert.Add("work_day", d)
-            dataToInsert.Add("categorie_id", categorieId)
-
-            Dim workedHours(,) As Integer = New Integer(,) {
-                {CInt(worked_hour_from.Text), CInt(worked_min_from.Text)},
-                {CInt(worked_hour_to.Text), CInt(worked_min_to.Text)}}
-
-            saveTime(dataToInsert, workedHours)
-            resetForm()
-        Else
-            Exit Sub
+        If Not _run_validation() Then
+            Return
         End If
+
+        If tb_comment.Text Is Nothing Then
+            tb_comment.Text = ""
+        End If
+
+        saveTime(
+            Format(dtp_date.Value, "yyyy-MM-dd"),
+            tb_comment.Text,
+            DirectCast(cbCategories.SelectedItem, KeyValuePair(Of Integer, String)).Key.ToString(),
+            New hoursManagement(
+                CInt(worked_hour_from.Text),
+                CInt(worked_min_from.Text),
+                CInt(worked_hour_to.Text),
+                CInt(worked_min_to.Text)
+                )
+            )
+        resetForm()
     End Sub
 
    
     Private Sub resetForm()
         For Each ctrl As Control In grBWorkHour.Controls
-            If TypeOf ctrl Is Label Then
-                Continue For
-            End If
-            'Clearing text in the TextBox
             If TypeOf ctrl Is TextBox Then
                 ctrl.Text = ""
-            End If
-            'Clearing text in the TextBox
-            If TypeOf ctrl Is MaskedTextBox Then
+            ElseIf TypeOf ctrl Is MaskedTextBox Then
                 ctrl.Text = ""
-            End If
-            'Clearing Selected RadioButton 
-            If TypeOf ctrl Is RadioButton Then
+            ElseIf TypeOf ctrl Is RadioButton Then
                 CType(ctrl, RadioButton).Checked = False
-            End If
-            'Clearing selected ListBox
-            If TypeOf ctrl Is ListBox Then
+            ElseIf TypeOf ctrl Is ListBox Then
                 CType(ctrl, ListBox).ClearSelected()
-            End If
-            'Clearing selected CheckBox
-            If TypeOf ctrl Is CheckBox Then
+            ElseIf TypeOf ctrl Is CheckBox Then
                 CType(ctrl, CheckBox).Checked = False
-            End If
-            'Clearing selected combobox
-            If TypeOf ctrl Is ComboBox Then
+            ElseIf TypeOf ctrl Is ComboBox Then
                 CType(ctrl, ComboBox).SelectedIndex = 0
-            End If
-
-            If TypeOf ctrl Is DateTimePicker Then
+            ElseIf TypeOf ctrl Is DateTimePicker Then
                 CType(ctrl, DateTimePicker).Value = DateTime.Now
             End If
         Next
