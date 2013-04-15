@@ -28,8 +28,8 @@ Partial Class ListeHeures
         Me.worked_to = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.worked_hours = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.comment = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
+        Me.btn_add = New System.Windows.Forms.Button()
+        Me.btn_mod = New System.Windows.Forms.Button()
         Me.btn_delete = New System.Windows.Forms.Button()
         Me.lbl_title = New System.Windows.Forms.Label()
         Me.SuspendLayout()
@@ -75,23 +75,23 @@ Partial Class ListeHeures
         Me.comment.Text = "Commentaires"
         Me.comment.Width = 237
         '
-        'Button1
+        'btn_add
         '
-        Me.Button1.Location = New System.Drawing.Point(108, 331)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 1
-        Me.Button1.Text = "Ajouter"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.btn_add.Location = New System.Drawing.Point(108, 331)
+        Me.btn_add.Name = "btn_add"
+        Me.btn_add.Size = New System.Drawing.Size(75, 23)
+        Me.btn_add.TabIndex = 1
+        Me.btn_add.Text = "Ajouter"
+        Me.btn_add.UseVisualStyleBackColor = True
         '
-        'Button2
+        'btn_mod
         '
-        Me.Button2.Location = New System.Drawing.Point(189, 331)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(75, 23)
-        Me.Button2.TabIndex = 2
-        Me.Button2.Text = "Modifier"
-        Me.Button2.UseVisualStyleBackColor = True
+        Me.btn_mod.Location = New System.Drawing.Point(189, 331)
+        Me.btn_mod.Name = "btn_mod"
+        Me.btn_mod.Size = New System.Drawing.Size(75, 23)
+        Me.btn_mod.TabIndex = 2
+        Me.btn_mod.Text = "Modifier"
+        Me.btn_mod.UseVisualStyleBackColor = True
         '
         'btn_delete
         '
@@ -119,8 +119,8 @@ Partial Class ListeHeures
         Me.ClientSize = New System.Drawing.Size(912, 435)
         Me.Controls.Add(Me.lbl_title)
         Me.Controls.Add(Me.btn_delete)
-        Me.Controls.Add(Me.Button2)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.btn_mod)
+        Me.Controls.Add(Me.btn_add)
         Me.Controls.Add(Me.lvStudent)
         Me.Name = "ListeHeures"
         Me.Text = "ListeHeures"
@@ -132,8 +132,8 @@ Partial Class ListeHeures
     Friend WithEvents worked_hours As System.Windows.Forms.ColumnHeader
     Friend WithEvents lvStudent As System.Windows.Forms.ListView
     Friend WithEvents comment As System.Windows.Forms.ColumnHeader
-    Friend WithEvents Button1 As System.Windows.Forms.Button
-    Friend WithEvents Button2 As System.Windows.Forms.Button
+    Friend WithEvents btn_add As System.Windows.Forms.Button
+    Friend WithEvents btn_mod As System.Windows.Forms.Button
     Friend WithEvents worked_from As System.Windows.Forms.ColumnHeader
     Friend WithEvents worked_to As System.Windows.Forms.ColumnHeader
     Friend WithEvents btn_delete As System.Windows.Forms.Button
