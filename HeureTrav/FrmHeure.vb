@@ -34,7 +34,7 @@ Public Class FrmHeure
 
             categorieId = DirectCast(cbCategories.SelectedItem, KeyValuePair(Of Integer, String)).Key.ToString()
 
-            If Not tb_comment.Text = Nothing Then
+            If tb_comment.Text = Nothing Then
                 tb_comment.Text = ""
             End If
 
