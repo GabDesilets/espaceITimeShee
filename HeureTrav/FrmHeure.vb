@@ -8,7 +8,6 @@ Public Class FrmHeure
         cbCategories.DataSource = New BindingSource(getCategories(), Nothing)
         cbCategories.DisplayMember = "Value"
         cbCategories.ValueMember = "Key"
-        ' AddHandler  cbCategories.SelectedIndexChanged += New EventHandler(AddressOf cbCategories_SelectedIndexChanged)
      
     End Sub
 
@@ -40,8 +39,8 @@ Public Class FrmHeure
             DirectCast(cbCategories.SelectedItem, KeyValuePair(Of Integer, String)).Key.ToString(),
             New hoursManagement(
                 CInt(worked_hour_from.Text),
-                CInt(worked_min_from.Text),
                 CInt(worked_hour_to.Text),
+                CInt(worked_min_from.Text),
                 CInt(worked_min_to.Text)
                 )
             )

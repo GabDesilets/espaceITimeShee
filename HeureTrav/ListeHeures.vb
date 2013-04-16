@@ -4,22 +4,23 @@ Public Class ListeHeures
 
     Private Sub ListeHeures_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Dim r = db.Query(
-            "SELECT tt.work_day,CONCAT_WS(':',from_hour,from_min) as worked_from,CONCAT_WS(':',to_hour,to_min) as worked_to, worked_hours ,tt.comment,tt.etu_id" &
+            "SELECT tt.work_day,from_hour,from_min,to_hour,to_min, worked_hours ,tt.comment,tt.etu_id" &
             " FROM temps_travail tt" &
             " JOIN etudiant e on e.id=tt.etu_id"
         )
         Dim i As ListViewItem
 
         Do While r.Read
+
             i = New ListViewItem(New String() {
                 Format(CDate(r.GetValue(0).ToString), "yyyy-MM-dd"),
-                CStr(r.GetValue(1)),
-                CStr(r.GetValue(2)),
-                CStr(r.GetValue(3)),
-                CStr(r.GetValue(4))
+                String.Format("{0:00}:{1:00}", CInt(r.GetValue(1)), CInt(r.GetValue(2))),
+                String.Format("{0:00}:{1:00}", CInt(r.GetValue(3)), CInt(r.GetValue(4))),
+                CStr(r.GetValue(5)),
+                CStr(r.GetValue(6))
             })
             'hidden value , purpose : store the uid will be usefull later for update
-            i.Tag = r.GetValue(5)
+            i.Tag = r.GetValue(7)
 
             lvStudent.Items.Add(i)
         Loop
