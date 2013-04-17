@@ -58,9 +58,11 @@ Module mOperations
 
     End Function
 
-    Public Sub deleteStudentTime(ByVal studentId As Integer)
+    Public Sub deleteStudentTime(ByVal workTimeRow As WorkTimeRow)
         db.Command(
-            "DELETE FROM temps_travail WHERE etu_id = @0", studentId
+            "DELETE FROM temps_travail WHERE etu_id = @0 and id = @1",
+            workTimeRow.userId,
+            workTimeRow.rowId
             )
     End Sub
 

@@ -1,17 +1,18 @@
 ﻿Imports MySql.Data.MySqlClient
 Public Class ListeHeures
     Public db As MySqlDB = New MySqlDB("Data Source=localhost;Database=sitemeut_espace-i2;User ID=root;Password=toor;")
-
+    Public workTimeRow As WorkTimeRow = New WorkTimeRow()
     Private Sub ListeHeures_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Dim r = db.Query(
-            "SELECT tt.work_day,from_hour,from_min,to_hour,to_min, worked_hours ,tt.comment,tt.etu_id" &
+            "SELECT tt.work_day,from_hour,from_min,to_hour,to_min, worked_hours ,tt.comment,tt.etu_id, tt.id" &
             " FROM temps_travail tt" &
             " JOIN etudiant e on e.id=tt.etu_id"
         )
         Dim i As ListViewItem
 
-        Do While r.Read
 
+        Dim rowArr As New Dictionary(Of String, Integer)
+        Do While r.Read
             i = New ListViewItem(New String() {
                 Format(CDate(r.GetValue(0).ToString), "yyyy-MM-dd"),
                 String.Format("{0:00}:{1:00}", CInt(r.GetValue(1)), CInt(r.GetValue(2))),
@@ -19,8 +20,11 @@ Public Class ListeHeures
                 CStr(r.GetValue(5)),
                 CStr(r.GetValue(6))
             })
-            'hidden value , purpose : store the uid will be usefull later for update
-            i.Tag = r.GetValue(7)
+
+            'hidden value , purpose : store the uid will be usefull later for update pos 0 is UID and 1 row id
+            'Please check a better way to do this i tryed with an object but pissed me off
+          
+            i.Tag = New workTimeRow(CInt(r.GetValue(8)), CInt(r.GetValue(7)))
 
             lvStudent.Items.Add(i)
         Loop
@@ -29,10 +33,10 @@ Public Class ListeHeures
     End Sub
 
     Private Sub lvStudent_DoubleClick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lvStudent.DoubleClick
-        Dim li = lvStudent.FocusedItem
+        Dim li = lvStudent.FocusedItem.Tag
 
         ' va chercher la valeur storer a ma colonne X Debug.WriteLine(li.SubItems(work_date.Index).Text)
-        Debug.WriteLine(li.Tag)
+        Debug.WriteLine(li)
     End Sub
 
 
@@ -67,8 +71,12 @@ Public Class ListeHeures
     End Sub
 
     Private Sub btn_delete_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_delete.Click
-        ' TODO id de la row much?
-        db.Command("DELETE FROM temps_travail WHERE etu_id = @0", lvStudent.SelectedItems(0).Tag)
+        If lvStudent.SelectedIndices.Count <= 0 Then
+            Return
+        End If
+        Dim listTag = lvStudent.FocusedItem.Tag
+
+        deleteStudentTime(CType(listTag, workTimeRow))
         lvStudent.Items.Remove(lvStudent.SelectedItems(0))
     End Sub
 

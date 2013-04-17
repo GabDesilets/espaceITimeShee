@@ -122,6 +122,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="MySqlDB.vb" />
+    <Compile Include="workTimeRow.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FrmHeure.resx">
