@@ -1,6 +1,9 @@
 ﻿Imports MySql.Data.MySqlClient
 Public Class FrmHeure
-    Public db As MySqlDB = New MySqlDB("Data Source=localhost;Database=sitemeut_espace-i2;User ID=root;Password=toor;")
+    Public Shared db As MySqlDB
+
+    Public other As ListeHeures
+
     Public worksHours As hoursManagement = New hoursManagement()
     Private Sub FrmHeure_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         dtp_date.Value = DateTime.Now
@@ -8,7 +11,7 @@ Public Class FrmHeure
         cbCategories.DataSource = New BindingSource(getCategories(), Nothing)
         cbCategories.DisplayMember = "Value"
         cbCategories.ValueMember = "Key"
-     
+
     End Sub
 
     Private Sub setDayOfWeek()
@@ -47,7 +50,7 @@ Public Class FrmHeure
         resetForm()
     End Sub
 
-   
+
     Private Sub resetForm()
         For Each ctrl As Control In grBWorkHour.Controls
             If TypeOf ctrl Is TextBox Then
@@ -104,6 +107,6 @@ Public Class FrmHeure
     Private Sub btn_return_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_return.Click
         resetForm()
         Me.Hide()
-        ListeHeures.Show()
+        other.Show()
     End Sub
 End Class

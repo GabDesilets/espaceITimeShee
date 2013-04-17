@@ -1,7 +1,14 @@
 ﻿Imports MySql.Data.MySqlClient
 Public Class ListeHeures
-    Public db As MySqlDB = New MySqlDB("Data Source=localhost;Database=sitemeut_espace-i2;User ID=root;Password=toor;")
-    Public workTimeRow As WorkTimeRow = New WorkTimeRow()
+    Public Shared db As MySqlDB
+
+    Public uid As Integer, other As FrmHeure
+
+    Public Sub New(u As Integer)
+        InitializeComponent()
+        uid = u
+    End Sub
+
     Private Sub ListeHeures_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Dim r = db.Query(
             "SELECT tt.work_day,from_hour,from_min,to_hour,to_min, worked_hours ,tt.comment,tt.etu_id, tt.id" &
@@ -42,7 +49,7 @@ Public Class ListeHeures
 
     Private Sub btn_add_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_add.Click
         Me.Hide()
-        FrmHeure.Show()
+        other.Show()
     End Sub
 
 
@@ -52,22 +59,22 @@ Public Class ListeHeures
         End If
 
         Me.Hide()
-        FrmHeure.Show()
+        other.Show()
 
         Dim row = lvStudent.SelectedItems(0)
         Dim time_from, time_to As String()
 
-        FrmHeure.dtp_date.Value = CDate(row.SubItems(0).Text)
+        other.dtp_date.Value = CDate(row.SubItems(0).Text)
 
         time_from = row.SubItems(1).Text.Split(":"c)
-        FrmHeure.worked_hour_from.Text = time_from(0)
-        FrmHeure.worked_min_from.Text = time_from(1)
+        other.worked_hour_from.Text = time_from(0)
+        other.worked_min_from.Text = time_from(1)
 
         time_to = row.SubItems(2).Text.Split(":"c)
-        FrmHeure.worked_hour_to.Text = time_to(0)
-        FrmHeure.worked_min_to.Text = time_to(1)
+        other.worked_hour_to.Text = time_to(0)
+        other.worked_min_to.Text = time_to(1)
 
-        FrmHeure.tb_comment.Text = row.SubItems(4).Text
+        other.tb_comment.Text = row.SubItems(4).Text
     End Sub
 
     Private Sub btn_delete_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_delete.Click
@@ -81,6 +88,6 @@ Public Class ListeHeures
     End Sub
 
     Private Sub ListeHeures_Closed() Handles Me.FormClosed
-        FrmHeure.Close()
+        other.Close()
     End Sub
 End Class
