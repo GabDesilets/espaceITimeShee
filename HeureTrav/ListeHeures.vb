@@ -10,33 +10,7 @@ Public Class ListeHeures
     End Sub
 
     Private Sub ListeHeures_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        Dim r = db.Query(
-            "SELECT tt.work_day,from_hour,from_min,to_hour,to_min, worked_hours ,tt.comment,tt.etu_id, tt.id" &
-            " FROM temps_travail tt" &
-            " JOIN etudiant e on e.id=tt.etu_id"
-        )
-        Dim i As ListViewItem
-
-
-        Dim rowArr As New Dictionary(Of String, Integer)
-        Do While r.Read
-            i = New ListViewItem(New String() {
-                Format(CDate(r.GetValue(0).ToString), "yyyy-MM-dd"),
-                String.Format("{0:00}:{1:00}", CInt(r.GetValue(1)), CInt(r.GetValue(2))),
-                String.Format("{0:00}:{1:00}", CInt(r.GetValue(3)), CInt(r.GetValue(4))),
-                CStr(r.GetValue(5)),
-                CStr(r.GetValue(6))
-            })
-
-            'hidden value , purpose : store the uid will be usefull later for update pos 0 is UID and 1 row id
-            'Please check a better way to do this i tryed with an object but pissed me off
-          
-            i.Tag = New workTimeRow(CInt(r.GetValue(8)), CInt(r.GetValue(7)))
-
-            lvStudent.Items.Add(i)
-        Loop
-
-        r.Close()
+        loadForm()
     End Sub
 
     Private Sub lvStudent_DoubleClick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lvStudent.DoubleClick
@@ -62,10 +36,11 @@ Public Class ListeHeures
         other.Show()
 
         Dim row = lvStudent.SelectedItems(0)
+        Dim listTag = lvStudent.FocusedItem.Tag
         Dim time_from, time_to As String()
 
         other.dtp_date.Value = CDate(row.SubItems(0).Text)
-
+        other.cbCategories.SelectedValue = getCategorieIdByRowId(CType(listTag, workTimeRow))
         time_from = row.SubItems(1).Text.Split(":"c)
         other.worked_hour_from.Text = time_from(0)
         other.worked_min_from.Text = time_from(1)
@@ -86,7 +61,34 @@ Public Class ListeHeures
         deleteStudentTime(CType(listTag, workTimeRow))
         lvStudent.Items.Remove(lvStudent.SelectedItems(0))
     End Sub
+    Public Sub loadForm()
+        Dim r = db.Query(
+                   "SELECT tt.work_day,from_hour,from_min,to_hour,to_min, worked_hours ,tt.comment,tt.etu_id, tt.id" &
+                   " FROM temps_travail tt" &
+                   " JOIN etudiant e on e.id=tt.etu_id"
+               )
+        lvStudent.Items.Clear()
+        Dim i As ListViewItem
 
+        Dim rowArr As New Dictionary(Of String, Integer)
+        Do While r.Read
+            i = New ListViewItem(New String() {
+                Format(CDate(r.GetValue(0).ToString), "yyyy-MM-dd"),
+                String.Format("{0:00}:{1:00}", CInt(r.GetValue(1)), CInt(r.GetValue(2))),
+                String.Format("{0:00}:{1:00}", CInt(r.GetValue(3)), CInt(r.GetValue(4))),
+                CStr(r.GetValue(5)),
+                CStr(r.GetValue(6))
+            })
+
+            'hidden value , purpose : store the uid will be usefull later for update pos 0 is UID and 1 row id
+
+            i.Tag = New workTimeRow(CInt(r.GetValue(8)), CInt(r.GetValue(7)))
+
+            lvStudent.Items.Add(i)
+        Loop
+
+        r.Close()
+    End Sub
     Private Sub ListeHeures_Closed() Handles Me.FormClosed
         other.Close()
     End Sub

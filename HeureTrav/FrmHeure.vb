@@ -107,6 +107,7 @@ Public Class FrmHeure
     Private Sub btn_return_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_return.Click
         resetForm()
         Me.Hide()
+        other.loadForm()
         other.Show()
     End Sub
 End Class
