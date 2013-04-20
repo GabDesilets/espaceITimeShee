@@ -69,10 +69,8 @@ Module mOperations
 
     Public Function getCategorieIdByRowId(ByVal workTimeRow As workTimeRow) As Integer
         Dim r = db.Query("SELECT categorie_id from temps_travail where id = @0  LIMIT 1 ", workTimeRow.rowId)
-        Dim cat_id As Integer
-        While r.Read()
-            cat_id = CInt(r("categorie_id"))
-        End While
+        r.Read()
+        Dim cat_id As Integer = CInt(r("categorie_id"))
 
         r.Close()
         Return cat_id

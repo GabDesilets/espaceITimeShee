@@ -71,7 +71,7 @@ Public Class ListeHeures
         Dim i As ListViewItem
 
         Dim rowArr As New Dictionary(Of String, Integer)
-        Do While r.Read
+        Do While r.Read()
             i = New ListViewItem(New String() {
                 Format(CDate(r.GetValue(0).ToString), "yyyy-MM-dd"),
                 String.Format("{0:00}:{1:00}", CInt(r.GetValue(1)), CInt(r.GetValue(2))),
