@@ -2,8 +2,8 @@
 Module mOperations
     Public db As MySqlDB = New MySqlDB("Data Source=localhost;Database=sitemeut_espace-i2;User ID=root;Password=toor;")
 
-    Public Sub saveTime(ByVal work_day As String, ByVal comment As String, ByVal categorie_id As String, ByVal hours As hoursManagement)
-        If checkIfWorkedToday(3, work_day) Then
+    Public Sub saveTime(ByVal work_day As String, ByVal comment As String, ByVal categorie_id As String, ByVal hours As hoursManagement, ByVal uid As Integer)
+        If checkIfWorkedToday(uid, work_day) Then
             db.Command(
                 "UPDATE temps_travail set worked_hours = @0,comment = @1, categorie_id = @2,from_hour = @3 ,to_hour = @4,from_min = @5, to_min = @6 where work_day = @7 and etu_id = @8",
                    hours.workedHours,
@@ -14,25 +14,25 @@ Module mOperations
                    hours.minFrom,
                    hours.minTo,
                    work_day,
-                   3
+                   uid
                        )
 
         Else
             db.Command(
                "INSERT INTO temps_travail (etu_id, work_day,worked_hours, from_hour,to_hour,from_min,to_min,comment,categorie_id) " &
                "VALUES(@0, @1, @2, @3, @4, @5, @6, @7, @8)",
-               3,
+               uid,
                work_day,
                hours.workedHours,
                hours.hourFrom,
-               hours.minFrom,
                hours.hourTo,
+               hours.minFrom,
                hours.minTo,
                comment,
                categorie_id
            )
         End If
-       
+
     End Sub
 
     Public Function getCategories() As Dictionary(Of Integer, String)
@@ -74,6 +74,23 @@ Module mOperations
 
         r.Close()
         Return cat_id
+    End Function
+
+    Public Function getUserNameById(ByVal studentId As Integer) As String
+        Dim r = db.Query("SELECT CONCAT_WS(' ',prenom,nom) as name from etudiant where id = @0  LIMIT 1 ", studentId)
+        r.Read()
+        Dim uName As String = CStr(r("name"))
+
+        r.Close()
+        Return uName
+    End Function
+
+    Public Function getFirstOfWeek(ByRef Dt As DateTime) As DateTime
+        Return Dt.AddDays(-Dt.DayOfWeek)
+    End Function
+
+    Public Function getLastOfWeek(ByRef Dt As DateTime) As DateTime
+        Return Dt.AddDays(-Dt.DayOfWeek + 6)
     End Function
 
 End Module

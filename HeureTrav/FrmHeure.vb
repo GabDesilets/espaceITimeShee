@@ -2,7 +2,13 @@
 Public Class FrmHeure
     Public Shared db As MySqlDB
 
+    Public uid As Integer
     Public other As ListeHeures
+
+    Public Sub New(ByVal u As Integer)
+        InitializeComponent()
+        uid = u
+    End Sub
 
     Public worksHours As hoursManagement = New hoursManagement()
     Private Sub FrmHeure_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -45,7 +51,8 @@ Public Class FrmHeure
                 CInt(worked_hour_to.Text),
                 CInt(worked_min_from.Text),
                 CInt(worked_min_to.Text)
-                )
+                ),
+            uid
             )
         resetForm()
     End Sub
@@ -105,9 +112,16 @@ Public Class FrmHeure
     End Sub
 
     Private Sub btn_return_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_return.Click
+        Dim dateOfFirstDay As DateTime = getFirstOfWeek(DateTime.Now)
+        Dim dateOflastDay As DateTime = getLastOfWeek(DateTime.Now)
+
+      
+        Dim dtFrom As String = Format(dateOfFirstDay, "yyyy-MM-dd")
+        Dim dtTo As String = Format(dateOflastDay, "yyyy-MM-dd")
+
         resetForm()
         Me.Hide()
-        other.loadForm()
+        other.fillByWorkedDayBetweenDates(dtFrom, dtTo)
         other.Show()
     End Sub
 End Class

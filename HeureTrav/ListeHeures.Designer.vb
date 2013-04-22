@@ -32,6 +32,10 @@ Partial Class ListeHeures
         Me.btn_mod = New System.Windows.Forms.Button()
         Me.btn_delete = New System.Windows.Forms.Button()
         Me.lbl_title = New System.Windows.Forms.Label()
+        Me.dateFrom = New System.Windows.Forms.DateTimePicker()
+        Me.dateTo = New System.Windows.Forms.DateTimePicker()
+        Me.lbl_from = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'lvStudent
@@ -106,17 +110,57 @@ Partial Class ListeHeures
         '
         Me.lbl_title.AutoSize = True
         Me.lbl_title.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_title.Location = New System.Drawing.Point(239, 38)
+        Me.lbl_title.Location = New System.Drawing.Point(252, 9)
         Me.lbl_title.Name = "lbl_title"
-        Me.lbl_title.Size = New System.Drawing.Size(312, 29)
+        Me.lbl_title.Size = New System.Drawing.Size(87, 29)
         Me.lbl_title.TabIndex = 4
-        Me.lbl_title.Text = "Set big ass title for this table"
+        Me.lbl_title.Text = "list title"
+        '
+        'dateFrom
+        '
+        Me.dateFrom.CustomFormat = "yyyy-MM-dd"
+        Me.dateFrom.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dateFrom.Location = New System.Drawing.Point(150, 59)
+        Me.dateFrom.Name = "dateFrom"
+        Me.dateFrom.Size = New System.Drawing.Size(106, 20)
+        Me.dateFrom.TabIndex = 5
+        '
+        'dateTo
+        '
+        Me.dateTo.CustomFormat = "yyyy-MM-dd"
+        Me.dateTo.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dateTo.Location = New System.Drawing.Point(303, 59)
+        Me.dateTo.Name = "dateTo"
+        Me.dateTo.Size = New System.Drawing.Size(106, 20)
+        Me.dateTo.TabIndex = 6
+        '
+        'lbl_from
+        '
+        Me.lbl_from.AutoSize = True
+        Me.lbl_from.Location = New System.Drawing.Point(117, 65)
+        Me.lbl_from.Name = "lbl_from"
+        Me.lbl_from.Size = New System.Drawing.Size(27, 13)
+        Me.lbl_from.TabIndex = 7
+        Me.lbl_from.Text = "Du :"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(271, 65)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(26, 13)
+        Me.Label2.TabIndex = 8
+        Me.Label2.Text = "Au :"
         '
         'ListeHeures
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(912, 435)
+        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.lbl_from)
+        Me.Controls.Add(Me.dateTo)
+        Me.Controls.Add(Me.dateFrom)
         Me.Controls.Add(Me.lbl_title)
         Me.Controls.Add(Me.btn_delete)
         Me.Controls.Add(Me.btn_mod)
@@ -138,4 +182,8 @@ Partial Class ListeHeures
     Friend WithEvents worked_to As System.Windows.Forms.ColumnHeader
     Friend WithEvents btn_delete As System.Windows.Forms.Button
     Friend WithEvents lbl_title As System.Windows.Forms.Label
+    Friend WithEvents dateFrom As System.Windows.Forms.DateTimePicker
+    Friend WithEvents dateTo As System.Windows.Forms.DateTimePicker
+    Friend WithEvents lbl_from As System.Windows.Forms.Label
+    Friend WithEvents Label2 As System.Windows.Forms.Label
 End Class

@@ -2,15 +2,24 @@
 Public Class ListeHeures
     Public Shared db As MySqlDB
 
-    Public uid As Integer, other As FrmHeure
+    Public uid As Integer, userName As String, other As FrmHeure
 
     Public Sub New(u As Integer)
         InitializeComponent()
         uid = u
+        userName = getUserNameById(uid)
     End Sub
 
     Private Sub ListeHeures_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        loadForm()
+        Dim dateOfFirstDay As DateTime = getfirstOfWeek(DateTime.Now)
+        Dim dateOflastDay As DateTime = getlastOfWeek(DateTime.Now)
+
+        lbl_title.Text = "Liste des heures de : " & userName
+        dateFrom.Value = dateOfFirstDay
+        dateTo.Value = dateOflastDay
+        Dim dtFrom As String = Format(dateOfFirstDay, "yyyy-MM-dd")
+        Dim dtTo As String = Format(dateOflastDay, "yyyy-MM-dd")
+        fillByWorkedDayBetweenDates(dtFrom, dtTo)
     End Sub
 
     Private Sub lvStudent_DoubleClick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lvStudent.DoubleClick
@@ -65,8 +74,11 @@ Public Class ListeHeures
         Dim r = db.Query(
                    "SELECT tt.work_day,from_hour,from_min,to_hour,to_min, worked_hours ,tt.comment,tt.etu_id, tt.id" &
                    " FROM temps_travail tt" &
-                   " JOIN etudiant e on e.id=tt.etu_id"
+                   " JOIN etudiant e on e.id=tt.etu_id" &
+                   " WHERE e.id = @0",
+                   uid
                )
+
         lvStudent.Items.Clear()
         Dim i As ListViewItem
 
@@ -92,4 +104,58 @@ Public Class ListeHeures
     Private Sub ListeHeures_Closed() Handles Me.FormClosed
         other.Close()
     End Sub
+
+    Public Sub fillByWorkedDayBetweenDates(ByVal dateFrom As String, ByVal dateTo As String)
+        'Even with the cast as date this wasn't working...
+        'Dim r = db.Query(
+        '           "SELECT tt.work_day,from_hour,from_min,to_hour,to_min, worked_hours ,tt.comment,tt.etu_id, tt.id" &
+        '           " FROM temps_travail tt" &
+        '           " JOIN etudiant e on e.id=tt.etu_id" &
+        '           " WHERE e.id = @0" &
+        '           " AND tt.work_day BETWEEN '@1' AND '@2' ",
+        '           uid,
+        '           dateFrom,
+        '           dateTo
+        '       )
+
+        Dim r = db.Query(
+                   "SELECT tt.work_day,from_hour,from_min,to_hour,to_min, worked_hours ,tt.comment,tt.etu_id, tt.id " &
+                    " FROM temps_travail tt" &
+                    " JOIN etudiant e on e.id=tt.etu_id " &
+                    " WHERE e.id = " & uid &
+                    " AND tt.work_day BETWEEN '" & dateFrom & "' AND '" & dateTo & "' ")
+
+
+        lvStudent.Items.Clear()
+        Dim i As ListViewItem
+
+        Dim rowArr As New Dictionary(Of String, Integer)
+        Do While r.Read()
+            i = New ListViewItem(New String() {
+                Format(CDate(r.GetValue(0).ToString), "yyyy-MM-dd"),
+                String.Format("{0:00}:{1:00}", CInt(r.GetValue(1)), CInt(r.GetValue(2))),
+                String.Format("{0:00}:{1:00}", CInt(r.GetValue(3)), CInt(r.GetValue(4))),
+                CStr(r.GetValue(5)),
+                CStr(r.GetValue(6))
+            })
+
+            'hidden value , purpose : store the uid will be usefull later for update pos 0 is UID and 1 row id
+
+            i.Tag = New workTimeRow(CInt(r.GetValue(8)), CInt(r.GetValue(7)))
+
+            lvStudent.Items.Add(i)
+        Loop
+
+        r.Close()
+    End Sub
+
+    Private Sub dateFrom_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles dateFrom.ValueChanged, dateTo.ValueChanged
+        Dim dfrom, dto As String
+        dfrom = Format(dateFrom.Value, "yyyy-MM-dd")
+        dto = Format(dateTo.Value, "yyyy-MM-dd")
+
+        fillByWorkedDayBetweenDates(dfrom, dto)
+    End Sub
+
+    
 End Class

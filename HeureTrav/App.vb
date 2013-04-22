@@ -12,7 +12,7 @@ Module App
 
         If Not uid = 0 Then
             Dim lh = New ListeHeures(uid)
-            Dim fh = New FrmHeure()
+            Dim fh = New FrmHeure(uid)
 
             ' This is needed to keep your current architecture. FrmHeure.* and ListeHeures.* in opposite
             ' forms was just broken. (calling .Show() on the _class_ WTF?)
