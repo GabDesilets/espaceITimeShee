@@ -1,13 +1,16 @@
 ﻿Imports MySql.Data.MySqlClient
 Public Class ListeHeures
     Public Shared db As MySqlDB
-
-    Public uid As Integer, userName As String, other As FrmHeure
+    Private Const STUDENT As Integer = 1
+    Private Const SUPER_USER As Integer = 2
+    Public uid, adminLvl As Integer, userName As String, other As FrmHeure
 
     Public Sub New(u As Integer)
         InitializeComponent()
         uid = u
+        adminLvl = getAdminLevelByUid(uid)
         userName = getUserNameById(uid)
+        checkAdminAccess(adminLvl)
     End Sub
 
     Private Sub ListeHeures_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -20,6 +23,11 @@ Public Class ListeHeures
         Dim dtFrom As String = Format(dateOfFirstDay, "yyyy-MM-dd")
         Dim dtTo As String = Format(dateOflastDay, "yyyy-MM-dd")
         fillByWorkedDayBetweenDates(dtFrom, dtTo)
+
+        Dim exitButton As New exitButton
+        Dim exitBtn = exitButton.createExitBtn()
+
+        panBtnExit.Controls.Add(exitBtn)
     End Sub
 
     Private Sub lvStudent_DoubleClick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lvStudent.DoubleClick
@@ -59,6 +67,8 @@ Public Class ListeHeures
         other.worked_min_to.Text = time_to(1)
 
         other.tb_comment.Text = row.SubItems(4).Text
+
+        other.lbl_hidden_row_id.Text = CType(listTag, workTimeRow).rowId.ToString
     End Sub
 
     Private Sub btn_delete_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_delete.Click
@@ -106,25 +116,17 @@ Public Class ListeHeures
     End Sub
 
     Public Sub fillByWorkedDayBetweenDates(ByVal dateFrom As String, ByVal dateTo As String)
-        'Even with the cast as date this wasn't working...
-        'Dim r = db.Query(
-        '           "SELECT tt.work_day,from_hour,from_min,to_hour,to_min, worked_hours ,tt.comment,tt.etu_id, tt.id" &
-        '           " FROM temps_travail tt" &
-        '           " JOIN etudiant e on e.id=tt.etu_id" &
-        '           " WHERE e.id = @0" &
-        '           " AND tt.work_day BETWEEN '@1' AND '@2' ",
-        '           uid,
-        '           dateFrom,
-        '           dateTo
-        '       )
 
         Dim r = db.Query(
-                   "SELECT tt.work_day,from_hour,from_min,to_hour,to_min, worked_hours ,tt.comment,tt.etu_id, tt.id " &
-                    " FROM temps_travail tt" &
-                    " JOIN etudiant e on e.id=tt.etu_id " &
-                    " WHERE e.id = " & uid &
-                    " AND tt.work_day BETWEEN '" & dateFrom & "' AND '" & dateTo & "' ")
-
+                   "SELECT tt.work_day,from_hour,from_min,to_hour,to_min, worked_hours ,tt.comment,tt.etu_id, tt.id" &
+                   " FROM temps_travail tt" &
+                   " JOIN etudiant e on e.id=tt.etu_id" &
+                   " WHERE e.id = @0" &
+                   " AND tt.work_day BETWEEN @1 AND @2 ",
+                   uid,
+                   dateFrom,
+                   dateTo
+               )
 
         lvStudent.Items.Clear()
         Dim i As ListViewItem
@@ -157,5 +159,15 @@ Public Class ListeHeures
         fillByWorkedDayBetweenDates(dfrom, dto)
     End Sub
 
-    
+    Private Sub checkAdminAccess(ByVal adminLvl As Integer)
+        If adminLvl < STUDENT Then
+            For Each ctrl As Control In Me.Controls
+                If TypeOf ctrl Is Button Then
+                    ctrl.Hide()
+                End If
+            Next
+
+        End If
+    End Sub
+
 End Class

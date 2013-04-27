@@ -28,14 +28,15 @@ Partial Class ListeHeures
         Me.worked_to = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.worked_hours = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.comment = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.btn_add = New System.Windows.Forms.Button()
-        Me.btn_mod = New System.Windows.Forms.Button()
-        Me.btn_delete = New System.Windows.Forms.Button()
         Me.lbl_title = New System.Windows.Forms.Label()
         Me.dateFrom = New System.Windows.Forms.DateTimePicker()
         Me.dateTo = New System.Windows.Forms.DateTimePicker()
         Me.lbl_from = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.panBtnExit = New System.Windows.Forms.Panel()
+        Me.btn_delete = New System.Windows.Forms.Button()
+        Me.btn_mod = New System.Windows.Forms.Button()
+        Me.btn_add = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'lvStudent
@@ -47,7 +48,7 @@ Partial Class ListeHeures
         Me.lvStudent.GridLines = True
         Me.lvStudent.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
         Me.lvStudent.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.lvStudent.Location = New System.Drawing.Point(108, 91)
+        Me.lvStudent.Location = New System.Drawing.Point(64, 106)
         Me.lvStudent.Name = "lvStudent"
         Me.lvStudent.Size = New System.Drawing.Size(646, 234)
         Me.lvStudent.Sorting = System.Windows.Forms.SortOrder.Ascending
@@ -79,38 +80,11 @@ Partial Class ListeHeures
         Me.comment.Text = "Commentaires"
         Me.comment.Width = 237
         '
-        'btn_add
-        '
-        Me.btn_add.Location = New System.Drawing.Point(108, 331)
-        Me.btn_add.Name = "btn_add"
-        Me.btn_add.Size = New System.Drawing.Size(75, 23)
-        Me.btn_add.TabIndex = 1
-        Me.btn_add.Text = "Ajouter"
-        Me.btn_add.UseVisualStyleBackColor = True
-        '
-        'btn_mod
-        '
-        Me.btn_mod.Location = New System.Drawing.Point(189, 331)
-        Me.btn_mod.Name = "btn_mod"
-        Me.btn_mod.Size = New System.Drawing.Size(75, 23)
-        Me.btn_mod.TabIndex = 2
-        Me.btn_mod.Text = "Modifier"
-        Me.btn_mod.UseVisualStyleBackColor = True
-        '
-        'btn_delete
-        '
-        Me.btn_delete.Location = New System.Drawing.Point(270, 331)
-        Me.btn_delete.Name = "btn_delete"
-        Me.btn_delete.Size = New System.Drawing.Size(75, 23)
-        Me.btn_delete.TabIndex = 3
-        Me.btn_delete.Text = "Supprimer"
-        Me.btn_delete.UseVisualStyleBackColor = True
-        '
         'lbl_title
         '
         Me.lbl_title.AutoSize = True
         Me.lbl_title.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_title.Location = New System.Drawing.Point(252, 9)
+        Me.lbl_title.Location = New System.Drawing.Point(208, 24)
         Me.lbl_title.Name = "lbl_title"
         Me.lbl_title.Size = New System.Drawing.Size(87, 29)
         Me.lbl_title.TabIndex = 4
@@ -120,7 +94,7 @@ Partial Class ListeHeures
         '
         Me.dateFrom.CustomFormat = "yyyy-MM-dd"
         Me.dateFrom.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dateFrom.Location = New System.Drawing.Point(150, 59)
+        Me.dateFrom.Location = New System.Drawing.Point(106, 74)
         Me.dateFrom.Name = "dateFrom"
         Me.dateFrom.Size = New System.Drawing.Size(106, 20)
         Me.dateFrom.TabIndex = 5
@@ -129,7 +103,7 @@ Partial Class ListeHeures
         '
         Me.dateTo.CustomFormat = "yyyy-MM-dd"
         Me.dateTo.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dateTo.Location = New System.Drawing.Point(303, 59)
+        Me.dateTo.Location = New System.Drawing.Point(259, 74)
         Me.dateTo.Name = "dateTo"
         Me.dateTo.Size = New System.Drawing.Size(106, 20)
         Me.dateTo.TabIndex = 6
@@ -137,7 +111,7 @@ Partial Class ListeHeures
         'lbl_from
         '
         Me.lbl_from.AutoSize = True
-        Me.lbl_from.Location = New System.Drawing.Point(117, 65)
+        Me.lbl_from.Location = New System.Drawing.Point(73, 80)
         Me.lbl_from.Name = "lbl_from"
         Me.lbl_from.Size = New System.Drawing.Size(27, 13)
         Me.lbl_from.TabIndex = 7
@@ -146,17 +120,59 @@ Partial Class ListeHeures
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(271, 65)
+        Me.Label2.Location = New System.Drawing.Point(227, 80)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(26, 13)
         Me.Label2.TabIndex = 8
         Me.Label2.Text = "Au :"
         '
+        'panBtnExit
+        '
+        Me.panBtnExit.Location = New System.Drawing.Point(768, 432)
+        Me.panBtnExit.Name = "panBtnExit"
+        Me.panBtnExit.Size = New System.Drawing.Size(131, 47)
+        Me.panBtnExit.TabIndex = 10
+        '
+        'btn_delete
+        '
+        Me.btn_delete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.btn_delete.Image = Global.FrmHeureTrav.My.Resources.Resources.pencil_delete
+        Me.btn_delete.ImageAlign = System.Drawing.ContentAlignment.BottomRight
+        Me.btn_delete.Location = New System.Drawing.Point(251, 346)
+        Me.btn_delete.Name = "btn_delete"
+        Me.btn_delete.Size = New System.Drawing.Size(88, 23)
+        Me.btn_delete.TabIndex = 3
+        Me.btn_delete.Text = "Supprimer"
+        Me.btn_delete.UseVisualStyleBackColor = True
+        '
+        'btn_mod
+        '
+        Me.btn_mod.Image = Global.FrmHeureTrav.My.Resources.Resources.pencil
+        Me.btn_mod.ImageAlign = System.Drawing.ContentAlignment.BottomRight
+        Me.btn_mod.Location = New System.Drawing.Point(158, 346)
+        Me.btn_mod.Name = "btn_mod"
+        Me.btn_mod.Size = New System.Drawing.Size(87, 23)
+        Me.btn_mod.TabIndex = 2
+        Me.btn_mod.Text = "Modifier"
+        Me.btn_mod.UseVisualStyleBackColor = True
+        '
+        'btn_add
+        '
+        Me.btn_add.Image = Global.FrmHeureTrav.My.Resources.Resources.pencil_add
+        Me.btn_add.ImageAlign = System.Drawing.ContentAlignment.BottomRight
+        Me.btn_add.Location = New System.Drawing.Point(64, 346)
+        Me.btn_add.Name = "btn_add"
+        Me.btn_add.Size = New System.Drawing.Size(88, 23)
+        Me.btn_add.TabIndex = 1
+        Me.btn_add.Text = "Ajouter"
+        Me.btn_add.UseVisualStyleBackColor = True
+        '
         'ListeHeures
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(912, 435)
+        Me.ClientSize = New System.Drawing.Size(911, 508)
+        Me.Controls.Add(Me.panBtnExit)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.lbl_from)
         Me.Controls.Add(Me.dateTo)
@@ -186,4 +202,5 @@ Partial Class ListeHeures
     Friend WithEvents dateTo As System.Windows.Forms.DateTimePicker
     Friend WithEvents lbl_from As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents panBtnExit As System.Windows.Forms.Panel
 End Class

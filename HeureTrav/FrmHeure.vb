@@ -3,20 +3,31 @@ Public Class FrmHeure
     Public Shared db As MySqlDB
 
     Public uid As Integer
+    Public userName As String
     Public other As ListeHeures
 
     Public Sub New(ByVal u As Integer)
         InitializeComponent()
         uid = u
+        userName = getUserNameById(uid)
     End Sub
 
     Public worksHours As hoursManagement = New hoursManagement()
     Private Sub FrmHeure_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         dtp_date.Value = DateTime.Now
+        lbl_add_success.Hide()
+        lbl_edit_success.Hide()
+        grBWorkHour.Text = userName
 
         cbCategories.DataSource = New BindingSource(getCategories(), Nothing)
         cbCategories.DisplayMember = "Value"
         cbCategories.ValueMember = "Key"
+
+
+        Dim exitButton As New exitButton
+        Dim exitBtn = exitButton.createExitBtn()
+
+        panBtnExit.Controls.Add(exitBtn)
 
     End Sub
 
@@ -34,6 +45,8 @@ Public Class FrmHeure
     End Sub
 
     Private Sub btn_save_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_save.Click
+        Dim isFrom As Integer
+        Dim rowId As String
         If Not _run_validation() Then
             Return
         End If
@@ -41,19 +54,29 @@ Public Class FrmHeure
         If tb_comment.Text Is Nothing Then
             tb_comment.Text = ""
         End If
+       
+        rowId = lbl_hidden_row_id.Text
 
-        saveTime(
-            Format(dtp_date.Value, "yyyy-MM-dd"),
-            tb_comment.Text,
-            DirectCast(cbCategories.SelectedItem, KeyValuePair(Of Integer, String)).Key.ToString(),
-            New hoursManagement(
-                CInt(worked_hour_from.Text),
-                CInt(worked_hour_to.Text),
-                CInt(worked_min_from.Text),
-                CInt(worked_min_to.Text)
-                ),
-            uid
-            )
+        isFrom = saveTime(
+                Format(dtp_date.Value, "yyyy-MM-dd"),
+                tb_comment.Text,
+                DirectCast(cbCategories.SelectedItem, KeyValuePair(Of Integer, String)).Key.ToString(),
+                New hoursManagement(
+                    CInt(worked_hour_from.Text),
+                    CInt(worked_hour_to.Text),
+                    CInt(worked_min_from.Text),
+                    CInt(worked_min_to.Text)
+                    ),
+                uid,
+                rowId
+                )
+
+        If isFrom = fromAdd Then
+            lbl_add_success.Show()
+        Else
+            lbl_edit_success.Show()
+        End If
+
         resetForm()
     End Sub
 
@@ -82,7 +105,7 @@ Public Class FrmHeure
         Dim ok = True
 
         For Each ctrl As Control In grBWorkHour.Controls
-            If TypeOf ctrl Is TextBox And IsNothing(ctrl.Text) And ctrl.Name.ToString IsNot "tb_comment" Then
+            If TypeOf ctrl Is TextBox And ctrl.Text = "" And ctrl.Name.ToString IsNot "tb_comment" Then
                 errProv.SetError(ctrl, "Ce champ ne peut pas etre vide")
                 ok = False
             End If
@@ -124,4 +147,11 @@ Public Class FrmHeure
         other.fillByWorkedDayBetweenDates(dtFrom, dtTo)
         other.Show()
     End Sub
+
+    Private Sub lbl_edit_success_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lbl_edit_success.Click, lbl_add_success.Click
+        Dim labelToHide = CType(sender, Label)
+        labelToHide.Hide()
+    End Sub
+
+   
 End Class

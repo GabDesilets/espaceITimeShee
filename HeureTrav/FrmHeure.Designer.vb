@@ -26,6 +26,8 @@ Partial Class FrmHeure
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmHeure))
         Me.lbl_hour = New System.Windows.Forms.Label()
         Me.grBWorkHour = New System.Windows.Forms.GroupBox()
+        Me.cbCategories = New System.Windows.Forms.ComboBox()
+        Me.lbl_cat = New System.Windows.Forms.Label()
         Me.worked_min_to = New System.Windows.Forms.TextBox()
         Me.worked_min_from = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -37,11 +39,14 @@ Partial Class FrmHeure
         Me.lbl_project = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.tb_comment = New System.Windows.Forms.TextBox()
-        Me.btn_save = New System.Windows.Forms.Button()
         Me.errProv = New System.Windows.Forms.ErrorProvider(Me.components)
-        Me.lbl_cat = New System.Windows.Forms.Label()
-        Me.cbCategories = New System.Windows.Forms.ComboBox()
+        Me.lbl_add_success = New System.Windows.Forms.Label()
+        Me.lbl_edit_success = New System.Windows.Forms.Label()
+        Me.lbl_hidden_row_id = New System.Windows.Forms.Label()
+        Me.Panel1 = New System.Windows.Forms.Panel()
         Me.btn_return = New System.Windows.Forms.Button()
+        Me.btn_save = New System.Windows.Forms.Button()
+        Me.panBtnExit = New System.Windows.Forms.Panel()
         Me.grBWorkHour.SuspendLayout()
         CType(Me.errProv, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -57,6 +62,7 @@ Partial Class FrmHeure
         '
         'grBWorkHour
         '
+        Me.grBWorkHour.Controls.Add(Me.Panel1)
         Me.grBWorkHour.Controls.Add(Me.cbCategories)
         Me.grBWorkHour.Controls.Add(Me.lbl_cat)
         Me.grBWorkHour.Controls.Add(Me.worked_min_to)
@@ -71,12 +77,31 @@ Partial Class FrmHeure
         Me.grBWorkHour.Controls.Add(Me.Label2)
         Me.grBWorkHour.Controls.Add(Me.tb_comment)
         Me.grBWorkHour.Controls.Add(Me.lbl_hour)
-        Me.grBWorkHour.Location = New System.Drawing.Point(38, 26)
+        Me.grBWorkHour.Location = New System.Drawing.Point(76, 90)
         Me.grBWorkHour.Name = "grBWorkHour"
         Me.grBWorkHour.Size = New System.Drawing.Size(540, 393)
         Me.grBWorkHour.TabIndex = 2
         Me.grBWorkHour.TabStop = False
         Me.grBWorkHour.Text = "GroupBox1"
+        '
+        'cbCategories
+        '
+        Me.cbCategories.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbCategories.FormattingEnabled = True
+        Me.cbCategories.Location = New System.Drawing.Point(92, 167)
+        Me.cbCategories.Name = "cbCategories"
+        Me.cbCategories.Size = New System.Drawing.Size(121, 21)
+        Me.cbCategories.Sorted = True
+        Me.cbCategories.TabIndex = 13
+        '
+        'lbl_cat
+        '
+        Me.lbl_cat.AutoSize = True
+        Me.lbl_cat.Location = New System.Drawing.Point(10, 170)
+        Me.lbl_cat.Name = "lbl_cat"
+        Me.lbl_cat.Size = New System.Drawing.Size(51, 13)
+        Me.lbl_cat.TabIndex = 12
+        Me.lbl_cat.Text = " Activité :"
         '
         'worked_min_to
         '
@@ -174,57 +199,90 @@ Partial Class FrmHeure
         Me.tb_comment.Size = New System.Drawing.Size(280, 167)
         Me.tb_comment.TabIndex = 4
         '
-        'btn_save
-        '
-        Me.btn_save.Image = CType(resources.GetObject("btn_save.Image"), System.Drawing.Image)
-        Me.btn_save.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btn_save.Location = New System.Drawing.Point(137, 425)
-        Me.btn_save.Name = "btn_save"
-        Me.btn_save.Size = New System.Drawing.Size(93, 28)
-        Me.btn_save.TabIndex = 3
-        Me.btn_save.Text = "Accepter"
-        Me.btn_save.UseVisualStyleBackColor = True
-        '
         'errProv
         '
         Me.errProv.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink
         Me.errProv.ContainerControl = Me
         '
-        'lbl_cat
+        'lbl_add_success
         '
-        Me.lbl_cat.AutoSize = True
-        Me.lbl_cat.Location = New System.Drawing.Point(10, 170)
-        Me.lbl_cat.Name = "lbl_cat"
-        Me.lbl_cat.Size = New System.Drawing.Size(51, 13)
-        Me.lbl_cat.TabIndex = 12
-        Me.lbl_cat.Text = " Activité :"
+        Me.lbl_add_success.AutoSize = True
+        Me.lbl_add_success.BackColor = System.Drawing.Color.PaleGreen
+        Me.lbl_add_success.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lbl_add_success.Font = New System.Drawing.Font("Microsoft Sans Serif", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_add_success.ForeColor = System.Drawing.Color.Black
+        Me.lbl_add_success.Location = New System.Drawing.Point(73, 32)
+        Me.lbl_add_success.Name = "lbl_add_success"
+        Me.lbl_add_success.Size = New System.Drawing.Size(272, 28)
+        Me.lbl_add_success.TabIndex = 5
+        Me.lbl_add_success.Text = "Ajout execute avec succes"
         '
-        'cbCategories
+        'lbl_edit_success
         '
-        Me.cbCategories.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbCategories.FormattingEnabled = True
-        Me.cbCategories.Location = New System.Drawing.Point(92, 167)
-        Me.cbCategories.Name = "cbCategories"
-        Me.cbCategories.Size = New System.Drawing.Size(121, 21)
-        Me.cbCategories.Sorted = True
-        Me.cbCategories.TabIndex = 13
+        Me.lbl_edit_success.AutoSize = True
+        Me.lbl_edit_success.BackColor = System.Drawing.Color.PaleGreen
+        Me.lbl_edit_success.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lbl_edit_success.Font = New System.Drawing.Font("Microsoft Sans Serif", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_edit_success.ForeColor = System.Drawing.Color.Black
+        Me.lbl_edit_success.Location = New System.Drawing.Point(73, 32)
+        Me.lbl_edit_success.Name = "lbl_edit_success"
+        Me.lbl_edit_success.Size = New System.Drawing.Size(289, 28)
+        Me.lbl_edit_success.TabIndex = 6
+        Me.lbl_edit_success.Text = "Edition execute avec succes"
+        '
+        'lbl_hidden_row_id
+        '
+        Me.lbl_hidden_row_id.AutoSize = True
+        Me.lbl_hidden_row_id.Location = New System.Drawing.Point(616, 539)
+        Me.lbl_hidden_row_id.Name = "lbl_hidden_row_id"
+        Me.lbl_hidden_row_id.Size = New System.Drawing.Size(0, 13)
+        Me.lbl_hidden_row_id.TabIndex = 7
+        '
+        'Panel1
+        '
+        Me.Panel1.Location = New System.Drawing.Point(599, 362)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(119, 47)
+        Me.Panel1.TabIndex = 8
         '
         'btn_return
         '
         Me.btn_return.Image = CType(resources.GetObject("btn_return.Image"), System.Drawing.Image)
         Me.btn_return.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btn_return.Location = New System.Drawing.Point(38, 425)
+        Me.btn_return.Location = New System.Drawing.Point(39, 489)
         Me.btn_return.Name = "btn_return"
         Me.btn_return.Size = New System.Drawing.Size(93, 28)
         Me.btn_return.TabIndex = 4
         Me.btn_return.Text = "Retour"
         Me.btn_return.UseVisualStyleBackColor = True
         '
+        'btn_save
+        '
+        Me.btn_save.Image = CType(resources.GetObject("btn_save.Image"), System.Drawing.Image)
+        Me.btn_save.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btn_save.Location = New System.Drawing.Point(144, 489)
+        Me.btn_save.Name = "btn_save"
+        Me.btn_save.Size = New System.Drawing.Size(93, 28)
+        Me.btn_save.TabIndex = 3
+        Me.btn_save.Text = "Accepter"
+        Me.btn_save.UseVisualStyleBackColor = True
+        '
+        'panBtnExit
+        '
+        Me.panBtnExit.Location = New System.Drawing.Point(740, 505)
+        Me.panBtnExit.Name = "panBtnExit"
+        Me.panBtnExit.Size = New System.Drawing.Size(131, 47)
+        Me.panBtnExit.TabIndex = 11
+        '
         'FrmHeure
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(779, 457)
+        Me.ClientSize = New System.Drawing.Size(893, 577)
+        Me.Controls.Add(Me.panBtnExit)
+        Me.Controls.Add(Me.lbl_hidden_row_id)
+        Me.Controls.Add(Me.lbl_edit_success)
+        Me.Controls.Add(Me.lbl_add_success)
         Me.Controls.Add(Me.btn_return)
         Me.Controls.Add(Me.btn_save)
         Me.Controls.Add(Me.grBWorkHour)
@@ -234,6 +292,7 @@ Partial Class FrmHeure
         Me.grBWorkHour.PerformLayout()
         CType(Me.errProv, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
     Friend WithEvents lbl_hour As System.Windows.Forms.Label
@@ -254,4 +313,9 @@ Partial Class FrmHeure
     Friend WithEvents lbl_cat As System.Windows.Forms.Label
     Friend WithEvents cbCategories As System.Windows.Forms.ComboBox
     Friend WithEvents btn_return As System.Windows.Forms.Button
+    Friend WithEvents lbl_add_success As System.Windows.Forms.Label
+    Friend WithEvents lbl_edit_success As System.Windows.Forms.Label
+    Friend WithEvents lbl_hidden_row_id As System.Windows.Forms.Label
+    Friend WithEvents Panel1 As System.Windows.Forms.Panel
+    Friend WithEvents panBtnExit As System.Windows.Forms.Panel
 End Class

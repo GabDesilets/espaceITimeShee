@@ -14,7 +14,6 @@
     Public Sub New()
         InitializeComponent()
         LError.Hide()
-
         uid = 0
     End Sub
 
