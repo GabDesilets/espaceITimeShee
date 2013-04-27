@@ -106,25 +106,17 @@ Public Class ListeHeures
     End Sub
 
     Public Sub fillByWorkedDayBetweenDates(ByVal dateFrom As String, ByVal dateTo As String)
-        'Even with the cast as date this wasn't working...
-        'Dim r = db.Query(
-        '           "SELECT tt.work_day,from_hour,from_min,to_hour,to_min, worked_hours ,tt.comment,tt.etu_id, tt.id" &
-        '           " FROM temps_travail tt" &
-        '           " JOIN etudiant e on e.id=tt.etu_id" &
-        '           " WHERE e.id = @0" &
-        '           " AND tt.work_day BETWEEN '@1' AND '@2' ",
-        '           uid,
-        '           dateFrom,
-        '           dateTo
-        '       )
 
         Dim r = db.Query(
-                   "SELECT tt.work_day,from_hour,from_min,to_hour,to_min, worked_hours ,tt.comment,tt.etu_id, tt.id " &
-                    " FROM temps_travail tt" &
-                    " JOIN etudiant e on e.id=tt.etu_id " &
-                    " WHERE e.id = " & uid &
-                    " AND tt.work_day BETWEEN '" & dateFrom & "' AND '" & dateTo & "' ")
-
+                   "SELECT tt.work_day,from_hour,from_min,to_hour,to_min, worked_hours ,tt.comment,tt.etu_id, tt.id" &
+                   " FROM temps_travail tt" &
+                   " JOIN etudiant e on e.id=tt.etu_id" &
+                   " WHERE e.id = @0" &
+                   " AND tt.work_day BETWEEN @1 AND @2 ",
+                   uid,
+                   dateFrom,
+                   dateTo
+               )
 
         lvStudent.Items.Clear()
         Dim i As ListViewItem

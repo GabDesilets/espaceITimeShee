@@ -13,6 +13,8 @@ Public Class FrmHeure
     Public worksHours As hoursManagement = New hoursManagement()
     Private Sub FrmHeure_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         dtp_date.Value = DateTime.Now
+        lbl_add_success.Hide()
+        lbl_edit_success.Hide()
 
         cbCategories.DataSource = New BindingSource(getCategories(), Nothing)
         cbCategories.DisplayMember = "Value"
@@ -82,7 +84,7 @@ Public Class FrmHeure
         Dim ok = True
 
         For Each ctrl As Control In grBWorkHour.Controls
-            If TypeOf ctrl Is TextBox And IsNothing(ctrl.Text) And ctrl.Name.ToString IsNot "tb_comment" Then
+            If TypeOf ctrl Is TextBox And ctrl.Text = "" And ctrl.Name.ToString IsNot "tb_comment" Then
                 errProv.SetError(ctrl, "Ce champ ne peut pas etre vide")
                 ok = False
             End If
