@@ -104,6 +104,15 @@ Module mOperations
         Return uName
     End Function
 
+    Public Function getAdminLevelByUid(ByVal uid As Integer) As Integer
+        Dim r = db.Query("SELECT admin from etudiant where id = @0  LIMIT 1 ", uid)
+        r.Read()
+        Dim uAdminLevel As Integer = CInt(r("admin"))
+
+        r.Close()
+        Return uAdminLevel
+    End Function
+
     Public Function getFirstOfWeek(ByRef Dt As DateTime) As DateTime
         Return Dt.AddDays(-Dt.DayOfWeek)
     End Function

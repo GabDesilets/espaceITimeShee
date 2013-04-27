@@ -1,13 +1,16 @@
 ﻿Imports MySql.Data.MySqlClient
 Public Class ListeHeures
     Public Shared db As MySqlDB
-
-    Public uid As Integer, userName As String, other As FrmHeure
+    Private Const STUDENT As Integer = 1
+    Private Const SUPER_USER As Integer = 2
+    Public uid, adminLvl As Integer, userName As String, other As FrmHeure
 
     Public Sub New(u As Integer)
         InitializeComponent()
         uid = u
+        adminLvl = getAdminLevelByUid(uid)
         userName = getUserNameById(uid)
+        checkAdminAccess(adminLvl)
     End Sub
 
     Private Sub ListeHeures_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -20,6 +23,11 @@ Public Class ListeHeures
         Dim dtFrom As String = Format(dateOfFirstDay, "yyyy-MM-dd")
         Dim dtTo As String = Format(dateOflastDay, "yyyy-MM-dd")
         fillByWorkedDayBetweenDates(dtFrom, dtTo)
+
+        Dim exitButton As New exitButton
+        Dim exitBtn = exitButton.createExitBtn()
+
+        panBtnExit.Controls.Add(exitBtn)
     End Sub
 
     Private Sub lvStudent_DoubleClick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lvStudent.DoubleClick
@@ -151,5 +159,15 @@ Public Class ListeHeures
         fillByWorkedDayBetweenDates(dfrom, dto)
     End Sub
 
-    
+    Private Sub checkAdminAccess(ByVal adminLvl As Integer)
+        If adminLvl < STUDENT Then
+            For Each ctrl As Control In Me.Controls
+                If TypeOf ctrl Is Button Then
+                    ctrl.Hide()
+                End If
+            Next
+
+        End If
+    End Sub
+
 End Class

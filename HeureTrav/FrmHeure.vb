@@ -3,11 +3,13 @@ Public Class FrmHeure
     Public Shared db As MySqlDB
 
     Public uid As Integer
+    Public userName As String
     Public other As ListeHeures
 
     Public Sub New(ByVal u As Integer)
         InitializeComponent()
         uid = u
+        userName = getUserNameById(uid)
     End Sub
 
     Public worksHours As hoursManagement = New hoursManagement()
@@ -15,10 +17,17 @@ Public Class FrmHeure
         dtp_date.Value = DateTime.Now
         lbl_add_success.Hide()
         lbl_edit_success.Hide()
+        grBWorkHour.Text = userName
 
         cbCategories.DataSource = New BindingSource(getCategories(), Nothing)
         cbCategories.DisplayMember = "Value"
         cbCategories.ValueMember = "Key"
+
+
+        Dim exitButton As New exitButton
+        Dim exitBtn = exitButton.createExitBtn()
+
+        panBtnExit.Controls.Add(exitBtn)
 
     End Sub
 
@@ -143,4 +152,6 @@ Public Class FrmHeure
         Dim labelToHide = CType(sender, Label)
         labelToHide.Hide()
     End Sub
+
+   
 End Class
