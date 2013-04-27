@@ -44,6 +44,7 @@ Partial Class FrmHeure
         Me.btn_return = New System.Windows.Forms.Button()
         Me.lbl_add_success = New System.Windows.Forms.Label()
         Me.lbl_edit_success = New System.Windows.Forms.Label()
+        Me.lbl_hidden_row_id = New System.Windows.Forms.Label()
         Me.grBWorkHour.SuspendLayout()
         CType(Me.errProv, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -248,11 +249,20 @@ Partial Class FrmHeure
         Me.lbl_edit_success.TabIndex = 6
         Me.lbl_edit_success.Text = "Edition execute avec succes"
         '
+        'lbl_hidden_row_id
+        '
+        Me.lbl_hidden_row_id.AutoSize = True
+        Me.lbl_hidden_row_id.Location = New System.Drawing.Point(616, 539)
+        Me.lbl_hidden_row_id.Name = "lbl_hidden_row_id"
+        Me.lbl_hidden_row_id.Size = New System.Drawing.Size(0, 13)
+        Me.lbl_hidden_row_id.TabIndex = 7
+        '
         'FrmHeure
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(687, 564)
+        Me.Controls.Add(Me.lbl_hidden_row_id)
         Me.Controls.Add(Me.lbl_edit_success)
         Me.Controls.Add(Me.lbl_add_success)
         Me.Controls.Add(Me.btn_return)
@@ -287,4 +297,5 @@ Partial Class FrmHeure
     Friend WithEvents btn_return As System.Windows.Forms.Button
     Friend WithEvents lbl_add_success As System.Windows.Forms.Label
     Friend WithEvents lbl_edit_success As System.Windows.Forms.Label
+    Friend WithEvents lbl_hidden_row_id As System.Windows.Forms.Label
 End Class

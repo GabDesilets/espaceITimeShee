@@ -59,6 +59,8 @@ Public Class ListeHeures
         other.worked_min_to.Text = time_to(1)
 
         other.tb_comment.Text = row.SubItems(4).Text
+
+        other.lbl_hidden_row_id.Text = CType(listTag, workTimeRow).rowId.ToString
     End Sub
 
     Private Sub btn_delete_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_delete.Click

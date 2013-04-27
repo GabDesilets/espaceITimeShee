@@ -4,11 +4,13 @@ Module mOperations
     Public Const fromAdd As Integer = 1
     Public Const fromEdit As Integer = 2
 
-    Public Function saveTime(ByVal work_day As String, ByVal comment As String, ByVal categorie_id As String, ByVal hours As hoursManagement, ByVal uid As Integer) As Integer
+    Public Function saveTime(ByVal work_day As String, ByVal comment As String, ByVal categorie_id As String, ByVal hours As hoursManagement, ByVal uid As Integer, ByVal rowId As String) As Integer
         Dim saveFrom As Integer
-        If checkIfWorkedToday(uid, work_day, hours) Then
+        If rowId <> "" Or checkIfWorkedToday(uid, work_day, hours) Then
+
             db.Command(
-                "UPDATE temps_travail set worked_hours = @0,comment = @1, categorie_id = @2,from_hour = @3 ,to_hour = @4,from_min = @5, to_min = @6 where work_day = @7 and etu_id = @8",
+                "UPDATE temps_travail set worked_hours = @0,comment = @1, categorie_id = @2,from_hour = @3 ,to_hour = @4,from_min = @5, to_min = @6 where work_day = @7 and etu_id = @8" &
+                " AND id = @9",
                    hours.workedHours,
                    comment,
                    categorie_id,
@@ -17,28 +19,30 @@ Module mOperations
                    hours.minFrom,
                    hours.minTo,
                    work_day,
-                   uid
+                   uid,
+                   rowId
                        )
             saveFrom = fromEdit
 
         Else
+
             db.Command(
-               "INSERT INTO temps_travail (etu_id, work_day,worked_hours, from_hour,to_hour,from_min,to_min,comment,categorie_id) " &
-               "VALUES(@0, @1, @2, @3, @4, @5, @6, @7, @8)",
-               uid,
-               work_day,
-               hours.workedHours,
-               hours.hourFrom,
-               hours.hourTo,
-               hours.minFrom,
-               hours.minTo,
-               comment,
-               categorie_id
-           )
+                "INSERT INTO temps_travail (etu_id, work_day,worked_hours, from_hour,to_hour,from_min,to_min,comment,categorie_id) " &
+                "VALUES(@0, @1, @2, @3, @4, @5, @6, @7, @8)",
+                uid,
+                work_day,
+                hours.workedHours,
+                hours.hourFrom,
+                hours.hourTo,
+                hours.minFrom,
+                hours.minTo,
+                comment,
+                categorie_id
+            )
 
             saveFrom = fromAdd
-        End If
 
+        End If
         Return saveFrom
     End Function
 

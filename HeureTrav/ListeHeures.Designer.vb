@@ -28,14 +28,14 @@ Partial Class ListeHeures
         Me.worked_to = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.worked_hours = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.comment = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.btn_add = New System.Windows.Forms.Button()
-        Me.btn_mod = New System.Windows.Forms.Button()
-        Me.btn_delete = New System.Windows.Forms.Button()
         Me.lbl_title = New System.Windows.Forms.Label()
         Me.dateFrom = New System.Windows.Forms.DateTimePicker()
         Me.dateTo = New System.Windows.Forms.DateTimePicker()
         Me.lbl_from = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.btn_delete = New System.Windows.Forms.Button()
+        Me.btn_mod = New System.Windows.Forms.Button()
+        Me.btn_add = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'lvStudent
@@ -78,33 +78,6 @@ Partial Class ListeHeures
         '
         Me.comment.Text = "Commentaires"
         Me.comment.Width = 237
-        '
-        'btn_add
-        '
-        Me.btn_add.Location = New System.Drawing.Point(108, 331)
-        Me.btn_add.Name = "btn_add"
-        Me.btn_add.Size = New System.Drawing.Size(75, 23)
-        Me.btn_add.TabIndex = 1
-        Me.btn_add.Text = "Ajouter"
-        Me.btn_add.UseVisualStyleBackColor = True
-        '
-        'btn_mod
-        '
-        Me.btn_mod.Location = New System.Drawing.Point(189, 331)
-        Me.btn_mod.Name = "btn_mod"
-        Me.btn_mod.Size = New System.Drawing.Size(75, 23)
-        Me.btn_mod.TabIndex = 2
-        Me.btn_mod.Text = "Modifier"
-        Me.btn_mod.UseVisualStyleBackColor = True
-        '
-        'btn_delete
-        '
-        Me.btn_delete.Location = New System.Drawing.Point(270, 331)
-        Me.btn_delete.Name = "btn_delete"
-        Me.btn_delete.Size = New System.Drawing.Size(75, 23)
-        Me.btn_delete.TabIndex = 3
-        Me.btn_delete.Text = "Supprimer"
-        Me.btn_delete.UseVisualStyleBackColor = True
         '
         'lbl_title
         '
@@ -151,6 +124,40 @@ Partial Class ListeHeures
         Me.Label2.Size = New System.Drawing.Size(26, 13)
         Me.Label2.TabIndex = 8
         Me.Label2.Text = "Au :"
+        '
+        'btn_delete
+        '
+        Me.btn_delete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.btn_delete.Image = Global.FrmHeureTrav.My.Resources.Resources.pencil_delete
+        Me.btn_delete.ImageAlign = System.Drawing.ContentAlignment.BottomRight
+        Me.btn_delete.Location = New System.Drawing.Point(295, 331)
+        Me.btn_delete.Name = "btn_delete"
+        Me.btn_delete.Size = New System.Drawing.Size(88, 23)
+        Me.btn_delete.TabIndex = 3
+        Me.btn_delete.Text = "Supprimer"
+        Me.btn_delete.UseVisualStyleBackColor = True
+        '
+        'btn_mod
+        '
+        Me.btn_mod.Image = Global.FrmHeureTrav.My.Resources.Resources.pencil
+        Me.btn_mod.ImageAlign = System.Drawing.ContentAlignment.BottomRight
+        Me.btn_mod.Location = New System.Drawing.Point(202, 331)
+        Me.btn_mod.Name = "btn_mod"
+        Me.btn_mod.Size = New System.Drawing.Size(87, 23)
+        Me.btn_mod.TabIndex = 2
+        Me.btn_mod.Text = "Modifier"
+        Me.btn_mod.UseVisualStyleBackColor = True
+        '
+        'btn_add
+        '
+        Me.btn_add.Image = Global.FrmHeureTrav.My.Resources.Resources.pencil_add
+        Me.btn_add.ImageAlign = System.Drawing.ContentAlignment.BottomRight
+        Me.btn_add.Location = New System.Drawing.Point(108, 331)
+        Me.btn_add.Name = "btn_add"
+        Me.btn_add.Size = New System.Drawing.Size(88, 23)
+        Me.btn_add.TabIndex = 1
+        Me.btn_add.Text = "Ajouter"
+        Me.btn_add.UseVisualStyleBackColor = True
         '
         'ListeHeures
         '
