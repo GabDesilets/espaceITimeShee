@@ -138,6 +138,12 @@
     <Compile Include="TicketForm.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="TicketList.Designer.vb">
+      <DependentUpon>TicketList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TicketList.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="workTimeRow.vb" />
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +161,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TicketForm.resx">
       <DependentUpon>TicketForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TicketList.resx">
+      <DependentUpon>TicketList.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

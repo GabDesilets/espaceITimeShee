@@ -7,6 +7,8 @@ Module App
         ListeHeures.db = db
         FrmHeure.db = db
         LoginForm.db = db
+	TicketForm.db = db
+	TicketList.db = db
 
         Dim uid = LoginForm.Prompt()
 
