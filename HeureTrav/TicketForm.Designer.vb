@@ -39,10 +39,10 @@ Partial Class TicketForm
 		Me.txtQuestion = New System.Windows.Forms.TextBox()
 		Me.txtResponse = New System.Windows.Forms.TextBox()
 		Me.cboState = New System.Windows.Forms.ComboBox()
-		Me.txtUser = New System.Windows.Forms.TextBox()
 		Me.btn_save = New System.Windows.Forms.Button()
 		Me.btn_return = New System.Windows.Forms.Button()
 		Me.cboStaff = New System.Windows.Forms.ComboBox()
+		Me.cboUser = New System.Windows.Forms.ComboBox()
 		Container = New System.Windows.Forms.TableLayoutPanel()
 		lblRLast = New System.Windows.Forms.Label()
 		lblQLast = New System.Windows.Forms.Label()
@@ -65,6 +65,7 @@ Partial Class TicketForm
 		Container.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150!))
 		Container.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 175!))
 		Container.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+		Container.Controls.Add(Me.cboUser, 1, 0)
 		Container.Controls.Add(Me.cboStaff, 3, 0)
 		Container.Controls.Add(Me.lblRLastDisplay, 2, 4)
 		Container.Controls.Add(Me.lblQLastDisplay, 2, 2)
@@ -80,7 +81,6 @@ Partial Class TicketForm
 		Container.Controls.Add(Me.txtResponse, 0, 5)
 		Container.Controls.Add(lblResponse, 0, 4)
 		Container.Controls.Add(Me.cboState, 1, 1)
-		Container.Controls.Add(Me.txtUser, 1, 0)
 		Container.Controls.Add(FlowLayoutPanel1, 4, 6)
 		Container.Dock = System.Windows.Forms.DockStyle.Fill
 		Container.Location = New System.Drawing.Point(0, 0)
@@ -159,6 +159,7 @@ Partial Class TicketForm
 		'cboCategory
 		'
 		Me.cboCategory.Dock = System.Windows.Forms.DockStyle.Fill
+		Me.cboCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
 		Me.cboCategory.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
 		Me.cboCategory.FormattingEnabled = true
 		Me.cboCategory.Location = New System.Drawing.Point(478, 33)
@@ -249,21 +250,13 @@ Partial Class TicketForm
 		'cboState
 		'
 		Me.cboState.Dock = System.Windows.Forms.DockStyle.Fill
+		Me.cboState.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
 		Me.cboState.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
 		Me.cboState.FormattingEnabled = true
 		Me.cboState.Location = New System.Drawing.Point(153, 33)
 		Me.cboState.Name = "cboState"
 		Me.cboState.Size = New System.Drawing.Size(169, 24)
 		Me.cboState.TabIndex = 4
-		'
-		'txtUser
-		'
-		Me.txtUser.Dock = System.Windows.Forms.DockStyle.Fill
-		Me.txtUser.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-		Me.txtUser.Location = New System.Drawing.Point(153, 3)
-		Me.txtUser.Name = "txtUser"
-		Me.txtUser.Size = New System.Drawing.Size(169, 22)
-		Me.txtUser.TabIndex = 6
 		'
 		'FlowLayoutPanel1
 		'
@@ -309,6 +302,16 @@ Partial Class TicketForm
 		Me.cboStaff.Size = New System.Drawing.Size(169, 24)
 		Me.cboStaff.TabIndex = 19
 		'
+		'cboUser
+		'
+		Me.cboUser.Dock = System.Windows.Forms.DockStyle.Fill
+		Me.cboUser.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+		Me.cboUser.FormattingEnabled = true
+		Me.cboUser.Location = New System.Drawing.Point(153, 3)
+		Me.cboUser.Name = "cboUser"
+		Me.cboUser.Size = New System.Drawing.Size(169, 24)
+		Me.cboUser.TabIndex = 20
+		'
 		'TicketForm
 		'
 		Me.AcceptButton = Me.btn_save
@@ -330,10 +333,10 @@ End Sub
     Friend WithEvents txtQuestion As System.Windows.Forms.TextBox
     Friend WithEvents cboCategory As System.Windows.Forms.ComboBox
     Friend WithEvents cboState As System.Windows.Forms.ComboBox
-    Friend WithEvents txtUser As System.Windows.Forms.TextBox
     Friend WithEvents btn_save As System.Windows.Forms.Button
     Friend WithEvents btn_return As System.Windows.Forms.Button
     Friend WithEvents lblRLastDisplay As System.Windows.Forms.Label
     Friend WithEvents lblQLastDisplay As System.Windows.Forms.Label
     Friend WithEvents cboStaff As System.Windows.Forms.ComboBox
+    Friend WithEvents cboUser As System.Windows.Forms.ComboBox
 End Class

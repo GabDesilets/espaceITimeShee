@@ -1,61 +1,63 @@
-﻿Public Class TicketForm
+﻿Imports MySql.Data.MySqlClient
+
+Public Class TicketForm
 	Public Shared db AS MySqlDB
 
 	Public ID As Integer
-	Public States, Categories, Staff As Dictionary(Of Integer, String)
+	Public States, Categories, Staff, Users As Dictionary(Of Integer, String)
 
 	Public Sub New(Optional id As Integer = 0)
 		InitializeComponent()
 
 		ID = id
 
-		cboState.DataSource = States
-		cboState.DisplayMember = "Value"
-		cboState.ValueMember = "Key"
-
-		cboCategory.DataSource = Categories
-		cboCategory.DisplayMember = "Value"
-		cboCategory.ValueMember = "Key"
-
-		cboStaff.DataSource = Staff
-		cboStaff.DisplayMember = "Value"
-		cboStaff.ValueMember = "Key"
+		Staff = New Dictionary(Of Integer, String)
+		Users = New Dictionary(Of Integer, String)
+		States = New Dictionary(Of Integer, String)
+		Categories = New Dictionary(Of Integer, String)
 
 		Fill()
+
+		Dim set_bind = Sub (target As ComboBox, source As Dictionary(Of Integer, String))
+			target.DataSource = New BindingSource(source, Nothing)
+			target.DisplayMember = "Value"
+			target.ValueMember = "Key"
+		End Sub
+
+		set_bind(cboStaff, Staff)
+		set_bind(cboUser, Users)
+		set_bind(cboCategory, Categories)
+		set_bind(cboState, States)
 	End Sub
 
 	Public Sub Fill()
-		Dim db_states = db.Query("SELECT id, name FROM question_states")
-		States.Clear()
-		While db_states.Read()
-			States.Add(
-				CInt(db_states("id")),
-				CStr(db_states("name"))
-				)
-		End While
-		db_states.Close()
+		Dim fill_dict = Sub (dict As Dictionary(Of Integer, String), query As String, callback As Action(Of MySqlDataReader))
+			dict.Clear()
+			Using r = db.Query(query)
+				While r.Read()
+					callback(r)
+				End While
+			End Using
+		End Sub
 
-		Dim db_categories = db.Query("SELECT id, name FROM work_categories")
-		Categories.Clear()
-		While db_categories.Read()
-			Categories.Add(
-				CInt(db_categories("id")),
-				CStr(db_categories("name"))
-				)
-		End While
-		db_categories.Close()
 
-		Dim db_staff = db.Query("SELECT id, nom, prenom FROM etudiant")
-		Staff.Clear()
-		While db_staff.Read()
-			Staff.Add(
-				CInt(db_staff("id")),
-				CStr(db_staff("nom")) & ", " & CStr(db_staff("prenom"))
-				)
-		End While
-		db_staff.Close()
+		fill_dict(States, "SELECT id, name FROM question_states", Sub (r As MySqlDataReader)
+			States.Add(CInt(r("id")), CStr(r("name")))
+		End Sub)
 
-		Dim db_questions = db.Query(
+		fill_dict(Categories, "SELECT id, name FROM work_categories", Sub (r As MySqlDataReader)
+			Categories.Add(CInt(r("id")), CStr(r("name")))
+		End Sub)
+
+		fill_dict(Users, "SELECT id, nom, prenom FROM etudiant WHERE admin = 0", Sub (r As MySqlDataReader)
+			Users.Add(CInt(r("id")), CStr(r("nom")) & ", " & CStr(r("prenom")))
+		End Sub)
+
+		fill_dict(Staff, "SELECT id, nom, prenom FROM etudiant WHERE admin > 0", Sub (r As MySqlDataReader)
+			Staff.Add(CInt(r("id")), CStr(r("nom")) & ", " & CStr(r("prenom")))
+		End Sub)
+
+		Using db_questions = db.Query(
 					"SELECT etu_id, state, categorie_id, " &
 					"	response, response_modified, question, " &
 					"	question_modified " &
@@ -64,27 +66,27 @@
 				ID
 				)
 		
-		If db_questions.HasRows Then
-			db_questions.Read()
+			If db_questions.HasRows Then
+				db_questions.Read()
 
-			cboState.SelectedValue = CInt(db_questions("state"))
-			cboCategory.SelectedValue = CInt(db_questions("categorie_id"))
-			cboStaff.SelectedValue = CInt(db_questions("etu_id"))
-			txtQuestion.Text = CStr(db_questions("question"))
-			txtResponse.Text = CStr(db_questions("response"))
-			lblQLastDisplay.Text = CDate(db_questions("question_modified")).ToString("yyyy-MM-dd HH:mm")
-			lblRLastDisplay.Text = CDate(db_questions("response_modified")).ToString("yyyy-MM-dd HH:mm")
-		Else
-			cboState.SelectedValue = States.First()
-			cboCategory.SelectedValue = Categories.First()
-			cboStaff.SelectedValue = Staff.First()
-			txtQuestion.Text = Nothing
-			txtResponse.Text = Nothing
-			lblQLastDisplay.Text = Date.Now.ToString("yyyy-MM-dd HH:mm")
-			lblRLastDisplay.Text = Date.Now.ToString("yyyy-MM-dd HH:mm")
-		End If
+				cboState.SelectedValue = CInt(db_questions("state"))
+				cboCategory.SelectedValue = CInt(db_questions("categorie_id"))
+				cboStaff.SelectedValue = CInt(db_questions("etu_id"))
+				txtQuestion.Text = CStr(db_questions("question"))
+				txtResponse.Text = CStr(db_questions("response"))
+				lblQLastDisplay.Text = CDate(db_questions("question_modified")).ToString("yyyy-MM-dd HH:mm")
+				lblRLastDisplay.Text = CDate(db_questions("response_modified")).ToString("yyyy-MM-dd HH:mm")
+			Else
+				cboState.SelectedValue = States.First()
+				cboCategory.SelectedValue = Categories.First()
+				cboStaff.SelectedValue = Staff.First()
+				txtQuestion.Text = Nothing
+				txtResponse.Text = Nothing
+				lblQLastDisplay.Text = Date.Now.ToString("yyyy-MM-dd HH:mm")
+				lblRLastDisplay.Text = Date.Now.ToString("yyyy-MM-dd HH:mm")
+			End If
 
-		db_questions.Close()
+		End Using
 	End Sub
 
 	Public Sub Save()
@@ -111,8 +113,5 @@
 				txtQuestion.Text
 				)
 		End If
-	End Sub
-
-	Public Sub Clean()
 	End Sub
 End Class
