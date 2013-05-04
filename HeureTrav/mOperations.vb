@@ -1,11 +1,9 @@
 ﻿Imports MySql.Data.MySqlClient
 Module mOperations
     Public db As MySqlDB = New MySqlDB("Data Source=localhost;Database=sitemeut_espace-i2;User ID=root;Password=toor;")
-    Public Const fromAdd As Integer = 1
-    Public Const fromEdit As Integer = 2
 
-    Public Function saveTime(ByVal work_day As String, ByVal comment As String, ByVal categorie_id As String, ByVal hours As hoursManagement, ByVal uid As Integer, ByVal rowId As String) As Integer
-        Dim saveFrom As Integer
+    Public Sub saveTime(ByVal work_day As String, ByVal comment As String, ByVal categorie_id As String, ByVal hours As hoursManagement, ByVal uid As Integer, ByVal rowId As String)
+
         If rowId <> "" Or checkIfWorkedToday(uid, work_day, hours) Then
 
             db.Command(
@@ -22,7 +20,6 @@ Module mOperations
                    uid,
                    rowId
                        )
-            saveFrom = fromEdit
 
         Else
 
@@ -40,11 +37,9 @@ Module mOperations
                 categorie_id
             )
 
-            saveFrom = fromAdd
-
         End If
-        Return saveFrom
-    End Function
+
+    End Sub
 
     Public Function getCategories() As Dictionary(Of Integer, String)
         Dim categories As New Dictionary(Of Integer, String)

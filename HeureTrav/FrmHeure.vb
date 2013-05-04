@@ -6,28 +6,24 @@ Public Class FrmHeure
     Public userName As String
     Public other As ListeHeures
 
-    Public Sub New(ByVal u As Integer)
+    Public Sub New(ByVal u As Integer, ByVal p As ListeHeures)
         InitializeComponent()
         uid = u
         userName = getUserNameById(uid)
+        other = p
+
     End Sub
 
     Public worksHours As hoursManagement = New hoursManagement()
     Private Sub FrmHeure_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         dtp_date.Value = DateTime.Now
-        lbl_add_success.Hide()
-        lbl_edit_success.Hide()
         grBWorkHour.Text = userName
 
         cbCategories.DataSource = New BindingSource(getCategories(), Nothing)
         cbCategories.DisplayMember = "Value"
         cbCategories.ValueMember = "Key"
 
-
-        Dim exitButton As New exitButton
-        Dim exitBtn = exitButton.createExitBtn()
-
-        panBtnExit.Controls.Add(exitBtn)
+        panBtnExit.Controls.Add(exitButton.createExitBtn(Me))
 
     End Sub
 
@@ -45,7 +41,6 @@ Public Class FrmHeure
     End Sub
 
     Private Sub btn_save_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_save.Click
-        Dim isFrom As Integer
         Dim rowId As String
         If Not _run_validation() Then
             Return
@@ -57,7 +52,7 @@ Public Class FrmHeure
        
         rowId = lbl_hidden_row_id.Text
 
-        isFrom = saveTime(
+        saveTime(
                 Format(dtp_date.Value, "yyyy-MM-dd"),
                 tb_comment.Text,
                 DirectCast(cbCategories.SelectedItem, KeyValuePair(Of Integer, String)).Key.ToString(),
@@ -70,12 +65,6 @@ Public Class FrmHeure
                 uid,
                 rowId
                 )
-
-        If isFrom = fromAdd Then
-            lbl_add_success.Show()
-        Else
-            lbl_edit_success.Show()
-        End If
 
         resetForm()
     End Sub
@@ -148,7 +137,7 @@ Public Class FrmHeure
         other.Show()
     End Sub
 
-    Private Sub lbl_edit_success_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lbl_edit_success.Click, lbl_add_success.Click
+    Private Sub lbl_edit_success_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Dim labelToHide = CType(sender, Label)
         labelToHide.Hide()
     End Sub

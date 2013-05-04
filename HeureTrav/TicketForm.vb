@@ -57,37 +57,39 @@ Public Class TicketForm
 			Staff.Add(CInt(r("id")), CStr(r("nom")) & ", " & CStr(r("prenom")))
 		End Sub)
 
-		Using r = db.Query(
-					"SELECT etu_id, staff_id, state, categorie_id, " &
-					"response, response_modified, question, " &
-					"question_modified " &
-					"FROM questions " &
-					"WHERE id = @0",
-				ID
-				)
-		
-			If r.HasRows Then
-				r.Read()
+        Using r = db.Query(
+           "SELECT etu_id, staff_id, state, categorie_id, " &
+           "response, response_modified, question, " &
+           "question_modified,time_entry_min " &
+           "FROM questions " &
+           "WHERE id = @0",
+          ID
+          )
 
-				cboState.SelectedValue = CInt(r("state"))
-				cboCategory.SelectedValue = CInt(r("categorie_id"))
-				cboUser.SelectedValue = CInt(r("etu_id"))
-				cboStaff.SelectedValue = CInt(r("staff_id"))
-				txtQuestion.Text = CStr(r("question"))
-				txtResponse.Text = CStr(r("response"))
-				lblQLastDisplay.Text = If(r("question_modified") Is DBNull.Value, Date.Now, CDate(r("question_modified"))).ToString("yyyy-MM-dd HH:mm")
-				lblRLastDisplay.Text = If(r("response_modified") Is DBNull.Value, Date.Now, CDate(r("response_modified"))).ToString("yyyy-MM-dd HH:mm")
-			Else
-				cboState.SelectedValue = States.First()
-				cboCategory.SelectedValue = Categories.First()
-				cboUser.SelectedValue = Users.First()
-				cboStaff.SelectedValue = Staff.First()
-				txtQuestion.Text = Nothing
-				txtResponse.Text = Nothing
-				lblQLastDisplay.Text = Date.Now.ToString("yyyy-MM-dd HH:mm")
-				lblRLastDisplay.Text = Date.Now.ToString("yyyy-MM-dd HH:mm")
-			End If
-		End Using
+            If r.HasRows Then
+                r.Read()
+
+                cboState.SelectedValue = CInt(r("state"))
+                cboCategory.SelectedValue = CInt(r("categorie_id"))
+                cboUser.SelectedValue = CInt(r("etu_id"))
+                cboStaff.SelectedValue = CInt(r("staff_id"))
+                txtQuestion.Text = CStr(r("question"))
+                txtResponse.Text = CStr(r("response"))
+                lblQLastDisplay.Text = If(r("question_modified") Is DBNull.Value, Date.Now, CDate(r("question_modified"))).ToString("yyyy-MM-dd HH:mm")
+                lblRLastDisplay.Text = If(r("response_modified") Is DBNull.Value, Date.Now, CDate(r("response_modified"))).ToString("yyyy-MM-dd HH:mm")
+                timeEntryMin.Text = CStr(r("time_entry_min"))
+            Else
+                cboState.SelectedValue = States.First()
+                cboCategory.SelectedValue = Categories.First()
+                cboUser.SelectedValue = Users.First()
+                cboStaff.SelectedValue = Staff.First()
+                txtQuestion.Text = Nothing
+                txtResponse.Text = Nothing
+                timeEntryMin.Text = Nothing
+                lblQLastDisplay.Text = Date.Now.ToString("yyyy-MM-dd HH:mm")
+                lblRLastDisplay.Text = Date.Now.ToString("yyyy-MM-dd HH:mm")
+            End If
+        End Using
 	End Sub
 
 	Public Sub ReturnBtn() Handles btn_return.Click
@@ -99,4 +101,8 @@ Public Class TicketForm
 		DialogResult = Windows.Forms.DialogResult.OK
 		Close()
 	End Sub
+
+    Private Sub timeEntryMin_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles timeEntryMin.KeyPress
+        e.Handled = Not (IsNumeric(e.KeyChar) Or Asc(e.KeyChar) = 46 Or Asc(e.KeyChar) = 8)
+    End Sub
 End Class

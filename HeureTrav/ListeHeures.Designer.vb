@@ -37,6 +37,8 @@ Partial Class ListeHeures
         Me.btn_delete = New System.Windows.Forms.Button()
         Me.btn_mod = New System.Windows.Forms.Button()
         Me.btn_add = New System.Windows.Forms.Button()
+        Me.bSAct = New System.Windows.Forms.Button()
+        Me.txtSQuery = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'lvStudent
@@ -50,7 +52,7 @@ Partial Class ListeHeures
         Me.lvStudent.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.lvStudent.Location = New System.Drawing.Point(64, 106)
         Me.lvStudent.Name = "lvStudent"
-        Me.lvStudent.Size = New System.Drawing.Size(646, 234)
+        Me.lvStudent.Size = New System.Drawing.Size(627, 219)
         Me.lvStudent.Sorting = System.Windows.Forms.SortOrder.Ascending
         Me.lvStudent.TabIndex = 0
         Me.lvStudent.UseCompatibleStateImageBehavior = False
@@ -167,11 +169,33 @@ Partial Class ListeHeures
         Me.btn_add.Text = "Ajouter"
         Me.btn_add.UseVisualStyleBackColor = True
         '
+        'bSAct
+        '
+        Me.bSAct.Location = New System.Drawing.Point(542, 71)
+        Me.bSAct.Name = "bSAct"
+        Me.bSAct.Size = New System.Drawing.Size(69, 23)
+        Me.bSAct.TabIndex = 13
+        Me.bSAct.Text = "Chercher"
+        Me.bSAct.UseVisualStyleBackColor = True
+        '
+        'txtSQuery
+        '
+        Me.txtSQuery.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.txtSQuery.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
+        Me.txtSQuery.BackColor = System.Drawing.SystemColors.Window
+        Me.txtSQuery.Cursor = System.Windows.Forms.Cursors.IBeam
+        Me.txtSQuery.Location = New System.Drawing.Point(397, 73)
+        Me.txtSQuery.Name = "txtSQuery"
+        Me.txtSQuery.Size = New System.Drawing.Size(139, 20)
+        Me.txtSQuery.TabIndex = 14
+        '
         'ListeHeures
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(911, 508)
+        Me.Controls.Add(Me.txtSQuery)
+        Me.Controls.Add(Me.bSAct)
         Me.Controls.Add(Me.panBtnExit)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.lbl_from)
@@ -203,4 +227,6 @@ Partial Class ListeHeures
     Friend WithEvents lbl_from As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents panBtnExit As System.Windows.Forms.Panel
+    Friend WithEvents bSAct As System.Windows.Forms.Button
+    Friend WithEvents txtSQuery As System.Windows.Forms.TextBox
 End Class

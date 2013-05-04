@@ -4,7 +4,8 @@
 	Public Sub New
  		InitializeComponent()
 
-		AddHandler btn_return.Click, Sub () Close()
+        AddHandler btn_return.Click, Sub() Hide()
+        AddHandler FormClosed, Sub() amenu.Show()
 
 		cboSColumn.SelectedIndex = 0
 		FillAutocomplete(0)
@@ -71,18 +72,20 @@
 			Return
 		End If
 		
-		db.Command(
-				"INSERT INTO questions (etu_id, staff_id, state, categorie_id, response, " &
-				"question, response_modified, question_modified) " &
-				"VALUES (@0, @1, @2, @3, @4, @5, @6, @6)",
-			dialog.cboUser.SelectedValue,
-			dialog.cboStaff.SelectedValue,
-			dialog.cboState.SelectedValue,
-			dialog.cboCategory.SelectedValue,
-			dialog.txtResponse.Text,
-			dialog.txtQuestion.Text,
-			Date.Now
-			)
+        db.Command(
+          "INSERT INTO questions (etu_id, staff_id, state, categorie_id, response, " &
+          "question, response_modified, question_modified,time_entry_min) " &
+          "VALUES (@0, @1, @2, @3, @4, @5, @6, @7, @8)",
+         dialog.cboUser.SelectedValue,
+         dialog.cboStaff.SelectedValue,
+         dialog.cboState.SelectedValue,
+         dialog.cboCategory.SelectedValue,
+         dialog.txtResponse.Text,
+         dialog.txtQuestion.Text,
+         Date.Now,
+         Date.Now,
+         CInt(dialog.timeEntryMin.Text)
+         )
 
 		Fill()
 	End Sub
@@ -99,29 +102,31 @@
 			Return
 		End If
 		
-		db.Command(
-			"UPDATE questions SET " &
-				"response_modified = CASE " &
-					"WHEN response = @5 THEN response_modified " &
-					"ELSE @7 " &
-				"END, " &
-				"question_modified = CASE " &
-					"WHEN question = @6 THEN question_modified " &
-					"ELSE @7 " &
-				"END, " &
-				"etu_id = @1, staff_id = @2, state = @3, " &
-				"categorie_id = @4, response = @5, " &
-				"question = @6 " &
-			"WHERE id = @0",
-			dialog.ID,
-			dialog.cboUser.SelectedValue,
-			dialog.cboStaff.SelectedValue,
-			dialog.cboState.SelectedValue,
-			dialog.cboCategory.SelectedValue,
-			dialog.txtResponse.Text,
-			dialog.txtQuestion.Text,
-			Date.Now
-			)
+        db.Command(
+         "UPDATE questions SET " &
+            "time_entry_min = @8, " &
+          "response_modified = CASE " &
+           "WHEN response = @5 THEN response_modified " &
+           "ELSE @7 " &
+          "END, " &
+          "question_modified = CASE " &
+           "WHEN question = @6 THEN question_modified " &
+           "ELSE @7 " &
+          "END, " &
+          "etu_id = @1, staff_id = @2, state = @3, " &
+          "categorie_id = @4, response = @5, " &
+          "question = @6 " &
+         "WHERE id = @0",
+         dialog.ID,
+         dialog.cboUser.SelectedValue,
+         dialog.cboStaff.SelectedValue,
+         dialog.cboState.SelectedValue,
+         dialog.cboCategory.SelectedValue,
+         dialog.txtResponse.Text,
+         dialog.txtQuestion.Text,
+         Date.Now,
+         CInt(dialog.timeEntryMin.Text)
+         )
 
 		Fill()
 	End Sub
@@ -155,4 +160,5 @@
 			Modify(CInt(dgList.SelectedRows(0).Tag))
 		End If
 	End Sub
+
 End Class

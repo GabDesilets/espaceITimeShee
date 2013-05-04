@@ -67,6 +67,13 @@ Namespace My.Resources
             End Get
         End Property
         
+        Friend ReadOnly Property application_view_list() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("application_view_list", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
         Friend ReadOnly Property door_out() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("door_out", resourceCulture)
@@ -98,6 +105,13 @@ Namespace My.Resources
         Friend ReadOnly Property pencil_delete() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("pencil_delete", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property to_do_list_cheked_all() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("to_do_list_cheked_all", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

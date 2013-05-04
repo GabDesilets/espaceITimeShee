@@ -1,5 +1,5 @@
 ﻿Public Class exitButton
-    Function createExitBtn() As Button
+    Shared Function createExitBtn(ByVal target As Form) As Button
         ' Create a Button object 
         Dim exitBtn As New Button
         ' Set Button properties
@@ -9,11 +9,8 @@
         exitBtn.Font = New Font("Microsoft Sans Serif", 10)
         exitBtn.Image = My.Resources.door_out
         exitBtn.ImageAlign = ContentAlignment.BottomRight
-        AddHandler exitBtn.Click, AddressOf exitBtn_Click
-       
+        AddHandler exitBtn.Click, Sub() System.Environment.Exit(0)
+
         Return exitBtn
     End Function
-    Private Sub exitBtn_Click(ByVal sender As Object, ByVal e As System.EventArgs)
-        Application.Exit()
-    End Sub
 End Class
