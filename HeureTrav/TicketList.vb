@@ -3,8 +3,6 @@
 
 	Public Sub New
  		InitializeComponent()
-
-        AddHandler btn_return.Click, Sub() Hide()
         AddHandler FormClosed, Sub() amenu.Show()
 
 		cboSColumn.SelectedIndex = 0
@@ -74,8 +72,8 @@
 		
         db.Command(
           "INSERT INTO questions (etu_id, staff_id, state, categorie_id, response, " &
-          "question, response_modified, question_modified,time_entry_min) " &
-          "VALUES (@0, @1, @2, @3, @4, @5, @6, @7, @8)",
+          "question, response_modified, question_modified,time_entry_min,program_number) " &
+          "VALUES (@0, @1, @2, @3, @4, @5, @6, @7, @8, @9)",
          dialog.cboUser.SelectedValue,
          dialog.cboStaff.SelectedValue,
          dialog.cboState.SelectedValue,
@@ -84,7 +82,8 @@
          dialog.txtQuestion.Text,
          Date.Now,
          Date.Now,
-         CInt(dialog.timeEntryMin.Text)
+         CInt(dialog.timeEntryMin.Text),
+         dialog.tbProgramNumber.Text
          )
 
 		Fill()
@@ -150,9 +149,15 @@
 	End Sub
 
 	Public Sub DelBtn() Handles btn_delete.Click
-		If Not dgList.SelectedRows.Count = 0 Then
-			Delete(CInt(dgList.SelectedRows(0).Tag))
-		End If
+        If Not dgList.SelectedRows.Count = 0 Then
+
+            If MsgBox("Vous etes sur le point de supprimer " & dgList.SelectedRows.Count & " elements", CType(MsgBoxStyle.Critical + MsgBoxStyle.YesNo, MsgBoxStyle), "WARNING") = MsgBoxResult.Yes Then
+                For Each item As DataGridViewRow In dgList.SelectedRows
+                    Delete(CInt(item.Tag))
+                Next
+            End If
+
+        End If
 	End Sub
 
 	Public Sub ModBtn() Handles btn_mod.Click
@@ -161,4 +166,8 @@
 		End If
 	End Sub
 
+    Private Sub btn_return_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_return.Click
+        Me.Hide()
+        amenu.Show()
+    End Sub
 End Class

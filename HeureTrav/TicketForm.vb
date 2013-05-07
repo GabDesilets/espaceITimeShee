@@ -60,7 +60,7 @@ Public Class TicketForm
         Using r = db.Query(
            "SELECT etu_id, staff_id, state, categorie_id, " &
            "response, response_modified, question, " &
-           "question_modified,time_entry_min " &
+           "question_modified,time_entry_min,program_number " &
            "FROM questions " &
            "WHERE id = @0",
           ID
@@ -78,6 +78,7 @@ Public Class TicketForm
                 lblQLastDisplay.Text = If(r("question_modified") Is DBNull.Value, Date.Now, CDate(r("question_modified"))).ToString("yyyy-MM-dd HH:mm")
                 lblRLastDisplay.Text = If(r("response_modified") Is DBNull.Value, Date.Now, CDate(r("response_modified"))).ToString("yyyy-MM-dd HH:mm")
                 timeEntryMin.Text = CStr(r("time_entry_min"))
+                tbProgramNumber.Text = CStr(r("program_number"))
             Else
                 cboState.SelectedValue = States.First()
                 cboCategory.SelectedValue = Categories.First()
@@ -86,6 +87,7 @@ Public Class TicketForm
                 txtQuestion.Text = Nothing
                 txtResponse.Text = Nothing
                 timeEntryMin.Text = Nothing
+                tbProgramNumber.Text = Nothing
                 lblQLastDisplay.Text = Date.Now.ToString("yyyy-MM-dd HH:mm")
                 lblRLastDisplay.Text = Date.Now.ToString("yyyy-MM-dd HH:mm")
             End If

@@ -139,6 +139,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="MySqlDB.vb" />
+    <Compile Include="StatsForm.Designer.vb">
+      <DependentUpon>StatsForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="StatsForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="TicketForm.Designer.vb">
       <DependentUpon>TicketForm.vb</DependentUpon>
     </Compile>
@@ -171,6 +177,9 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StatsForm.resx">
+      <DependentUpon>StatsForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TicketForm.resx">
       <DependentUpon>TicketForm.vb</DependentUpon>
@@ -236,6 +245,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\to_do_list_cheked_all.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\statistics.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\file_extension_log.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

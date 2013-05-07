@@ -22,10 +22,41 @@ Partial Class adminMenu
     'Ne la modifiez pas à l'aide de l'éditeur de code.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.panBtnExit = New System.Windows.Forms.Panel()
+        Me.bGenLog = New System.Windows.Forms.Button()
+        Me.bStats = New System.Windows.Forms.Button()
         Me.bTicketsList = New System.Windows.Forms.Button()
         Me.bHoursList = New System.Windows.Forms.Button()
-        Me.panBtnExit = New System.Windows.Forms.Panel()
         Me.SuspendLayout()
+        '
+        'panBtnExit
+        '
+        Me.panBtnExit.Location = New System.Drawing.Point(520, 262)
+        Me.panBtnExit.Name = "panBtnExit"
+        Me.panBtnExit.Size = New System.Drawing.Size(115, 55)
+        Me.panBtnExit.TabIndex = 2
+        '
+        'bGenLog
+        '
+        Me.bGenLog.Image = Global.FrmHeureTrav.My.Resources.Resources.file_extension_log
+        Me.bGenLog.ImageAlign = System.Drawing.ContentAlignment.BottomLeft
+        Me.bGenLog.Location = New System.Drawing.Point(239, 88)
+        Me.bGenLog.Name = "bGenLog"
+        Me.bGenLog.Size = New System.Drawing.Size(210, 39)
+        Me.bGenLog.TabIndex = 4
+        Me.bGenLog.Text = "Generer le jounal des activités"
+        Me.bGenLog.UseVisualStyleBackColor = True
+        '
+        'bStats
+        '
+        Me.bStats.Image = Global.FrmHeureTrav.My.Resources.Resources.statistics
+        Me.bStats.ImageAlign = System.Drawing.ContentAlignment.BottomLeft
+        Me.bStats.Location = New System.Drawing.Point(239, 31)
+        Me.bStats.Name = "bStats"
+        Me.bStats.Size = New System.Drawing.Size(210, 39)
+        Me.bStats.TabIndex = 3
+        Me.bStats.Text = "Statistiques"
+        Me.bStats.UseVisualStyleBackColor = True
         '
         'bTicketsList
         '
@@ -49,18 +80,13 @@ Partial Class adminMenu
         Me.bHoursList.Text = "Liste des heures de travail"
         Me.bHoursList.UseVisualStyleBackColor = True
         '
-        'panBtnExit
-        '
-        Me.panBtnExit.Location = New System.Drawing.Point(157, 195)
-        Me.panBtnExit.Name = "panBtnExit"
-        Me.panBtnExit.Size = New System.Drawing.Size(115, 55)
-        Me.panBtnExit.TabIndex = 2
-        '
         'adminMenu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(284, 262)
+        Me.ClientSize = New System.Drawing.Size(647, 329)
+        Me.Controls.Add(Me.bGenLog)
+        Me.Controls.Add(Me.bStats)
         Me.Controls.Add(Me.panBtnExit)
         Me.Controls.Add(Me.bTicketsList)
         Me.Controls.Add(Me.bHoursList)
@@ -72,4 +98,6 @@ Partial Class adminMenu
     Friend WithEvents bHoursList As System.Windows.Forms.Button
     Friend WithEvents bTicketsList As System.Windows.Forms.Button
     Friend WithEvents panBtnExit As System.Windows.Forms.Panel
+    Friend WithEvents bStats As System.Windows.Forms.Button
+    Friend WithEvents bGenLog As System.Windows.Forms.Button
 End Class

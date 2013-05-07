@@ -28,6 +28,7 @@ Partial Class TicketList
         Me.btn_delete = New System.Windows.Forms.Button()
         Me.btn_mod = New System.Windows.Forms.Button()
         Me.btn_add = New System.Windows.Forms.Button()
+        Me.btn_return = New System.Windows.Forms.Button()
         Me.cboSColumn = New System.Windows.Forms.ComboBox()
         Me.txtSQuery = New System.Windows.Forms.TextBox()
         Me.dgList = New System.Windows.Forms.DataGridView()
@@ -38,7 +39,6 @@ Partial Class TicketList
         Me.colQuestion = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colResponse = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.bSAct = New System.Windows.Forms.Button()
-        Me.btn_return = New System.Windows.Forms.Button()
         Container = New System.Windows.Forms.TableLayoutPanel()
         FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         Container.SuspendLayout()
@@ -108,6 +108,17 @@ Partial Class TicketList
         Me.btn_add.Text = "Ajouter"
         Me.btn_add.UseVisualStyleBackColor = True
         '
+        'btn_return
+        '
+        Me.btn_return.Image = CType(resources.GetObject("btn_return.Image"), System.Drawing.Image)
+        Me.btn_return.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btn_return.Location = New System.Drawing.Point(402, 3)
+        Me.btn_return.Name = "btn_return"
+        Me.btn_return.Size = New System.Drawing.Size(88, 23)
+        Me.btn_return.TabIndex = 7
+        Me.btn_return.Text = "Retour"
+        Me.btn_return.UseVisualStyleBackColor = True
+        '
         'cboSColumn
         '
         Me.cboSColumn.Dock = System.Windows.Forms.DockStyle.Fill
@@ -142,7 +153,6 @@ Partial Class TicketList
         Container.SetColumnSpan(Me.dgList, 3)
         Me.dgList.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgList.Location = New System.Drawing.Point(3, 33)
-        Me.dgList.MultiSelect = False
         Me.dgList.Name = "dgList"
         Me.dgList.ReadOnly = True
         Me.dgList.RowHeadersVisible = False
@@ -198,17 +208,6 @@ Partial Class TicketList
         Me.bSAct.TabIndex = 3
         Me.bSAct.Text = "Chercher"
         Me.bSAct.UseVisualStyleBackColor = True
-        '
-        'btn_return
-        '
-        Me.btn_return.Image = CType(resources.GetObject("btn_return.Image"), System.Drawing.Image)
-        Me.btn_return.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btn_return.Location = New System.Drawing.Point(402, 3)
-        Me.btn_return.Name = "btn_return"
-        Me.btn_return.Size = New System.Drawing.Size(88, 23)
-        Me.btn_return.TabIndex = 7
-        Me.btn_return.Text = "Retour"
-        Me.btn_return.UseVisualStyleBackColor = True
         '
         'TicketList
         '

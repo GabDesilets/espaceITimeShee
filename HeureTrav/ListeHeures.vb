@@ -10,8 +10,8 @@ Public Class ListeHeures
     Public Sub New(u As Integer)
         InitializeComponent()
         uid = u
-        adminLvl = getAdminLevelByUid(uid)
-        userName = getUserNameById(uid)
+        adminLvl = mOperations.getAdminLevelByUid(uid)
+        userName = mOperations.getUserNameById(uid)
         checkAdminAccess(adminLvl)
 
         dateFrom.Value = dateOfFirstDay
@@ -20,8 +20,9 @@ Public Class ListeHeures
         Dim dtTo As String = Format(dateOflastDay, "yyyy-MM-dd")
 
         If adminLvl > STUDENT Then
-            lvStudent.Columns.Add("Nom", 180, HorizontalAlignment.Left).DisplayIndex = 0
-            lvStudent.Size = New Size(804, 234)
+            lvStudent.Columns.Add("Nom", 90, HorizontalAlignment.Left).DisplayIndex = 0
+            lvStudent.Columns.Add("Prenom", 90, HorizontalAlignment.Left).DisplayIndex = 1
+            lvStudent.Size = New Size(810, 282)
         End If
         other = New FrmHeure(uid, Me)
     
@@ -84,43 +85,19 @@ Public Class ListeHeures
         If lvStudent.SelectedIndices.Count <= 0 Then
             Return
         End If
-        Dim listTag = lvStudent.FocusedItem.Tag
 
-        deleteStudentTime(CType(listTag, workTimeRow))
-        lvStudent.Items.Remove(lvStudent.SelectedItems(0))
-    End Sub
-    Public Sub loadForm()
-        Dim r = db.Query(
-                   "SELECT tt.work_day,from_hour,from_min,to_hour,to_min, worked_hours ,tt.comment,tt.etu_id, tt.id, CONCAT_WS(' ',e.prenom,e.nom) as name" &
-                   " FROM temps_travail tt" &
-                   " JOIN etudiant e on e.id=tt.etu_id" &
-                   " WHERE e.id = @0",
-                   uid
-               )
+        If MsgBox("Vous etes sur le point de supprimer " & lvStudent.SelectedIndices.Count & " elements", CType(MsgBoxStyle.Critical + MsgBoxStyle.YesNo, MsgBoxStyle), "WARNING") = MsgBoxResult.Yes Then
+            For Each item As ListViewItem In lvStudent.SelectedItems
+                If item.Selected Then
+                    Dim listTag = item.Tag
+                    mOperations.deleteStudentTime(CType(listTag, workTimeRow))
+                    lvStudent.Items.Remove(item)
+                End If
+            Next
+        End If
 
-        lvStudent.Items.Clear()
+        
 
-
-        Dim i As ListViewItem
-
-        Dim rowArr As New Dictionary(Of String, Integer)
-        Do While r.Read()
-            i = New ListViewItem(New String() {
-                Format(CDate(r.GetValue(0).ToString), "yyyy-MM-dd"),
-                String.Format("{0:00}:{1:00}", CInt(r.GetValue(1)), CInt(r.GetValue(2))),
-                String.Format("{0:00}:{1:00}", CInt(r.GetValue(3)), CInt(r.GetValue(4))),
-                CStr(r.GetValue(5)),
-                CStr(r.GetValue(6))
-            })
-
-            'hidden value , purpose : store the uid will be usefull later for update pos 0 is UID and 1 row id
-
-            i.Tag = New workTimeRow(CInt(r.GetValue(8)), CInt(r.GetValue(7)))
-
-            lvStudent.Items.Add(i)
-        Loop
-
-        r.Close()
     End Sub
 
     Private Sub ListeHeures_Closed() Handles Me.FormClosed
@@ -130,7 +107,7 @@ Public Class ListeHeures
 
     Public Sub fillByWorkedDayBetweenDates(ByVal dateFrom As String, ByVal dateTo As String)
 
-        Dim query = "SELECT tt.work_day,from_hour,from_min,to_hour,to_min, worked_hours ,tt.comment,tt.etu_id, tt.id,CONCAT_WS(' ',e.prenom,e.nom) as name" &
+        Dim query = "SELECT tt.work_day,from_hour,from_min,to_hour,to_min, worked_hours ,tt.comment,tt.etu_id, tt.id,e.prenom,e.nom " &
                    " FROM temps_travail tt" &
                    " JOIN etudiant e on e.id=tt.etu_id" &
                    " WHERE tt.work_day BETWEEN @0 AND @1 "
@@ -194,7 +171,8 @@ Public Class ListeHeures
                 String.Format("{0:00}:{1:00}", CInt(r.GetValue(3)), CInt(r.GetValue(4))),
                 CStr(r.GetValue(5)),
                 CStr(r.GetValue(6)),
-               CStr(r("name"))
+                CStr(r("nom")),
+                CStr(r("prenom"))
             })
 
             'hidden value , purpose : store the uid will be usefull later for update pos 0 is UID and 1 row id

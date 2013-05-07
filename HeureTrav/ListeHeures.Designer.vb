@@ -52,7 +52,7 @@ Partial Class ListeHeures
         Me.lvStudent.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.lvStudent.Location = New System.Drawing.Point(64, 106)
         Me.lvStudent.Name = "lvStudent"
-        Me.lvStudent.Size = New System.Drawing.Size(627, 219)
+        Me.lvStudent.Size = New System.Drawing.Size(647, 282)
         Me.lvStudent.Sorting = System.Windows.Forms.SortOrder.Ascending
         Me.lvStudent.TabIndex = 0
         Me.lvStudent.UseCompatibleStateImageBehavior = False
@@ -130,7 +130,7 @@ Partial Class ListeHeures
         '
         'panBtnExit
         '
-        Me.panBtnExit.Location = New System.Drawing.Point(768, 432)
+        Me.panBtnExit.Location = New System.Drawing.Point(1176, 554)
         Me.panBtnExit.Name = "panBtnExit"
         Me.panBtnExit.Size = New System.Drawing.Size(131, 47)
         Me.panBtnExit.TabIndex = 10
@@ -140,7 +140,7 @@ Partial Class ListeHeures
         Me.btn_delete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
         Me.btn_delete.Image = Global.FrmHeureTrav.My.Resources.Resources.pencil_delete
         Me.btn_delete.ImageAlign = System.Drawing.ContentAlignment.BottomRight
-        Me.btn_delete.Location = New System.Drawing.Point(251, 346)
+        Me.btn_delete.Location = New System.Drawing.Point(251, 394)
         Me.btn_delete.Name = "btn_delete"
         Me.btn_delete.Size = New System.Drawing.Size(88, 23)
         Me.btn_delete.TabIndex = 3
@@ -151,7 +151,7 @@ Partial Class ListeHeures
         '
         Me.btn_mod.Image = Global.FrmHeureTrav.My.Resources.Resources.pencil
         Me.btn_mod.ImageAlign = System.Drawing.ContentAlignment.BottomRight
-        Me.btn_mod.Location = New System.Drawing.Point(158, 346)
+        Me.btn_mod.Location = New System.Drawing.Point(158, 394)
         Me.btn_mod.Name = "btn_mod"
         Me.btn_mod.Size = New System.Drawing.Size(87, 23)
         Me.btn_mod.TabIndex = 2
@@ -162,7 +162,7 @@ Partial Class ListeHeures
         '
         Me.btn_add.Image = Global.FrmHeureTrav.My.Resources.Resources.pencil_add
         Me.btn_add.ImageAlign = System.Drawing.ContentAlignment.BottomRight
-        Me.btn_add.Location = New System.Drawing.Point(64, 346)
+        Me.btn_add.Location = New System.Drawing.Point(64, 394)
         Me.btn_add.Name = "btn_add"
         Me.btn_add.Size = New System.Drawing.Size(88, 23)
         Me.btn_add.TabIndex = 1
@@ -171,7 +171,7 @@ Partial Class ListeHeures
         '
         'bSAct
         '
-        Me.bSAct.Location = New System.Drawing.Point(542, 71)
+        Me.bSAct.Location = New System.Drawing.Point(642, 71)
         Me.bSAct.Name = "bSAct"
         Me.bSAct.Size = New System.Drawing.Size(69, 23)
         Me.bSAct.TabIndex = 13
@@ -184,7 +184,7 @@ Partial Class ListeHeures
         Me.txtSQuery.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
         Me.txtSQuery.BackColor = System.Drawing.SystemColors.Window
         Me.txtSQuery.Cursor = System.Windows.Forms.Cursors.IBeam
-        Me.txtSQuery.Location = New System.Drawing.Point(397, 73)
+        Me.txtSQuery.Location = New System.Drawing.Point(497, 73)
         Me.txtSQuery.Name = "txtSQuery"
         Me.txtSQuery.Size = New System.Drawing.Size(139, 20)
         Me.txtSQuery.TabIndex = 14
@@ -193,7 +193,7 @@ Partial Class ListeHeures
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(911, 508)
+        Me.ClientSize = New System.Drawing.Size(1319, 613)
         Me.Controls.Add(Me.txtSQuery)
         Me.Controls.Add(Me.bSAct)
         Me.Controls.Add(Me.panBtnExit)

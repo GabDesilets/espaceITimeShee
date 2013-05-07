@@ -81,6 +81,13 @@ Namespace My.Resources
             End Get
         End Property
         
+        Friend ReadOnly Property file_extension_log() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("file_extension_log", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
         Friend ReadOnly Property font_red_delete() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("font_red_delete", resourceCulture)
@@ -105,6 +112,13 @@ Namespace My.Resources
         Friend ReadOnly Property pencil_delete() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("pencil_delete", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property statistics() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("statistics", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

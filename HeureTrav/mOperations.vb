@@ -1,7 +1,8 @@
 ﻿Imports MySql.Data.MySqlClient
 Module mOperations
     Public db As MySqlDB = New MySqlDB("Data Source=localhost;Database=sitemeut_espace-i2;User ID=root;Password=toor;")
-
+    Private Const catProgrammation = "PROGRAMMATION"
+    Private Const catSupport = "SUPPORT"
     Public Sub saveTime(ByVal work_day As String, ByVal comment As String, ByVal categorie_id As String, ByVal hours As hoursManagement, ByVal uid As Integer, ByVal rowId As String)
 
         If rowId <> "" Or checkIfWorkedToday(uid, work_day, hours) Then
@@ -116,4 +117,92 @@ Module mOperations
         Return Dt.AddDays(-Dt.DayOfWeek + 6)
     End Function
 
+    Public Function getProgrammationHours(Optional ByVal dtFrom As String = Nothing, Optional ByVal dtTo As String = Nothing) As Dictionary(Of Integer, Decimal)
+        'We have to declare a local database connection because we already had one open and that create a conflict. other solution( i suggest you not ) is to close
+        'the first one take his channel for this one then close this one a reopen the other one....
+        Dim dbloc As MySqlDB = New MySqlDB("Data Source=localhost;Database=sitemeut_espace-i2;User ID=root;Password=toor;")
+        Dim r As MySqlDataReader
+        Dim query = "SELECT SUM( temps_travail.worked_hours ) AS prog_hours, temps_travail.etu_id " &
+                    " FROM(temps_travail)" &
+                    " JOIN work_categories wo ON wo.id = temps_travail.categorie_id" &
+                    " AND UPPER( wo.name ) LIKE  @0 "
+
+        If Not dtFrom = Nothing And Not dtTo = Nothing Then
+            query &= " AND temps_travail.work_day BETWEEN @1 AND @2 GROUP BY temps_travail.etu_id"
+        Else
+            query &= " GROUP BY temps_travail.etu_id"
+        End If
+
+        r = dbloc.Query(query, catProgrammation, dtFrom, dtTo)
+
+        Dim userProgHoursByCat = New Dictionary(Of Integer, Decimal)
+
+        While r.Read()
+            userProgHoursByCat.Add(CInt(r("etu_id")), CDec(r("prog_hours")))
+        End While
+
+        r.Close()
+        dbloc.Dispose()
+        Return userProgHoursByCat
+    End Function
+
+
+    Public Function geSupportHours(Optional ByVal dtFrom As String = Nothing, Optional ByVal dtTo As String = Nothing) As Dictionary(Of Integer, Decimal)
+        'We have to declare a local database connection because we already had one open and that create a conflict. other solution( i suggest you not ) is to close
+        'the first one take his channel for this one then close this one a reopen the other one....
+        Dim dbLocSupp As MySqlDB = New MySqlDB("Data Source=localhost;Database=sitemeut_espace-i2;User ID=root;Password=toor;")
+        Dim qr = dbLocSupp
+        Dim r As MySqlDataReader
+        Dim query = "SELECT SUM( temps_travail.worked_hours ) AS supp_hours, temps_travail.etu_id" &
+                    " FROM(temps_travail)" &
+                    " JOIN work_categories wo ON wo.id = temps_travail.categorie_id" &
+                    " WHERE UPPER( wo.name ) LIKE  @0 "
+
+        If Not dtFrom = Nothing And Not dtTo = Nothing Then
+            query &= " AND temps_travail.work_day BETWEEN @1 AND @2 GROUP BY temps_travail.etu_id"
+            r = qr.Query(query, catSupport, dtFrom, dtTo)
+        Else
+            query &= " GROUP BY temps_travail.etu_id"
+            r = qr.Query(query, catSupport)
+        End If
+
+
+        Dim userSuppHoursByCat = New Dictionary(Of Integer, Decimal)
+
+        While r.Read()
+            userSuppHoursByCat.Add(CInt(r("etu_id")), CDec(r("supp_hours")))
+        End While
+
+        r.Close()
+        dbLocSupp.Dispose()
+        Return userSuppHoursByCat
+
+    End Function
+
+    Public Function getTicketNumbers(Optional ByVal dtFrom As String = Nothing, Optional ByVal dtTo As String = Nothing) As Dictionary(Of Integer, Decimal)
+        Dim dbLocTick As MySqlDB = New MySqlDB("Data Source=localhost;Database=sitemeut_espace-i2;User ID=root;Password=toor;")
+        Dim qr = dbLocTick
+        Dim r As MySqlDataReader
+        Dim query = "SELECT count(*) AS nb_tickets, questions.staff_id as etu_id" &
+        " FROM(questions) "
+
+
+        If Not dtFrom = Nothing And Not dtTo = Nothing Then
+            query &= " WHERE questions.question_modified BETWEEN @0 AND @1 group by questions.staff_id"
+            r = qr.Query(query, dtFrom, dtTo)
+        Else
+            query &= " group by questions.staff_id "
+            r = qr.Query(query)
+        End If
+
+        Dim userTickets = New Dictionary(Of Integer, Decimal)
+
+        While r.Read()
+            userTickets.Add(CInt(r("etu_id")), CDec(r("nb_tickets")))
+        End While
+
+        r.Close()
+        dbLocTick.Dispose()
+        Return userTickets
+    End Function
 End Module
