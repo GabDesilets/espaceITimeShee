@@ -28,4 +28,11 @@
     End Sub
 
     
+    Private Sub bGenLog_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles bGenLog.Click
+        Dim clsLog As LogFile.ClsLog
+        clsLog = New LogFile.ClsLog
+        clsLog.dirName = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) & "\Journal d'activite"
+        clsLog.fileName = "\logFileGabTest.txt"
+        clsLog.writeLog("I like trains")
+    End Sub
 End Class

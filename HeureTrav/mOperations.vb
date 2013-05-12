@@ -188,7 +188,7 @@ Module mOperations
 
 
         If Not dtFrom = Nothing And Not dtTo = Nothing Then
-            query &= " WHERE questions.question_modified BETWEEN @0 AND @1 group by questions.staff_id"
+            query &= " WHERE DATE_FORMAT( questions.question_modified,  '%Y-%m-%d' ) BETWEEN @0 AND @1 group by questions.staff_id"
             r = qr.Query(query, dtFrom, dtTo)
         Else
             query &= " group by questions.staff_id "
@@ -204,5 +204,32 @@ Module mOperations
         r.Close()
         dbLocTick.Dispose()
         Return userTickets
+    End Function
+
+    Public Function getTicketTimeAverage(Optional ByVal dtFrom As String = Nothing, Optional ByVal dtTo As String = Nothing) As Dictionary(Of Integer, Decimal)
+        Dim dbLocTick As MySqlDB = New MySqlDB("Data Source=localhost;Database=sitemeut_espace-i2;User ID=root;Password=toor;")
+        Dim qr = dbLocTick
+        Dim r As MySqlDataReader
+        Dim query = "SELECT q.staff_id as etu_id ,FORMAT(AVG(q.time_entry_min),2) as avg_time_entry" &
+        " FROM questions q "
+
+
+        If Not dtFrom = Nothing And Not dtTo = Nothing Then
+            query &= " WHERE DATE_FORMAT( q.question_modified,  '%Y-%m-%d' )  BETWEEN @0 AND @1 group by q.staff_id"
+            r = qr.Query(query, dtFrom, dtTo)
+        Else
+            query &= " group by questions.staff_id "
+            r = qr.Query(query)
+        End If
+
+        Dim userTimeAvg = New Dictionary(Of Integer, Decimal)
+
+        While r.Read()
+            userTimeAvg.Add(CInt(r("etu_id")), CDec(r("avg_time_entry")))
+        End While
+
+        r.Close()
+        dbLocTick.Dispose()
+        Return userTimeAvg
     End Function
 End Module

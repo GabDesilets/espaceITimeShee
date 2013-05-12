@@ -22,26 +22,30 @@ Partial Class StatsForm
     'Ne la modifiez pas à l'aide de l'éditeur de code.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(StatsForm))
         Me.lvStatsStudent = New System.Windows.Forms.ListView()
         Me.students = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.progHours = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.supHours = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.totalHours = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.nbTickets = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.timeByTicketsMoy = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.txtSQuery = New System.Windows.Forms.TextBox()
         Me.bSAct = New System.Windows.Forms.Button()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.lbl_from = New System.Windows.Forms.Label()
         Me.dateTo = New System.Windows.Forms.DateTimePicker()
         Me.dateFrom = New System.Windows.Forms.DateTimePicker()
+        Me.btn_return = New System.Windows.Forms.Button()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'lvStatsStudent
         '
-        Me.lvStatsStudent.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.students, Me.progHours, Me.supHours, Me.totalHours, Me.nbTickets})
+        Me.lvStatsStudent.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.students, Me.progHours, Me.supHours, Me.totalHours, Me.nbTickets, Me.timeByTicketsMoy})
         Me.lvStatsStudent.Location = New System.Drawing.Point(145, 141)
         Me.lvStatsStudent.Name = "lvStatsStudent"
-        Me.lvStatsStudent.Size = New System.Drawing.Size(587, 199)
+        Me.lvStatsStudent.Size = New System.Drawing.Size(628, 199)
         Me.lvStatsStudent.TabIndex = 0
         Me.lvStatsStudent.UseCompatibleStateImageBehavior = False
         Me.lvStatsStudent.View = System.Windows.Forms.View.Details
@@ -49,6 +53,7 @@ Partial Class StatsForm
         'students
         '
         Me.students.Text = "Etudiants"
+        Me.students.Width = 105
         '
         'progHours
         '
@@ -63,12 +68,17 @@ Partial Class StatsForm
         'totalHours
         '
         Me.totalHours.Text = "Total"
-        Me.totalHours.Width = 109
+        Me.totalHours.Width = 78
         '
         'nbTickets
         '
         Me.nbTickets.Text = "Nbr interventions"
-        Me.nbTickets.Width = 82
+        Me.nbTickets.Width = 102
+        '
+        'timeByTicketsMoy
+        '
+        Me.timeByTicketsMoy.Text = "Temps moyen Intervention"
+        Me.timeByTicketsMoy.Width = 154
         '
         'txtSQuery
         '
@@ -126,11 +136,34 @@ Partial Class StatsForm
         Me.dateFrom.Size = New System.Drawing.Size(106, 20)
         Me.dateFrom.TabIndex = 17
         '
+        'btn_return
+        '
+        Me.btn_return.Image = CType(resources.GetObject("btn_return.Image"), System.Drawing.Image)
+        Me.btn_return.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btn_return.Location = New System.Drawing.Point(145, 346)
+        Me.btn_return.Name = "btn_return"
+        Me.btn_return.Size = New System.Drawing.Size(88, 23)
+        Me.btn_return.TabIndex = 21
+        Me.btn_return.Text = "Retour"
+        Me.btn_return.UseVisualStyleBackColor = True
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 24.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Location = New System.Drawing.Point(326, 9)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(166, 37)
+        Me.Label1.TabIndex = 22
+        Me.Label1.Text = "Statistique"
+        '
         'StatsForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(998, 441)
+        Me.ClientSize = New System.Drawing.Size(1127, 572)
+        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.btn_return)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.lbl_from)
         Me.Controls.Add(Me.dateTo)
@@ -156,4 +189,7 @@ Partial Class StatsForm
     Friend WithEvents lbl_from As System.Windows.Forms.Label
     Friend WithEvents dateTo As System.Windows.Forms.DateTimePicker
     Friend WithEvents dateFrom As System.Windows.Forms.DateTimePicker
+    Friend WithEvents timeByTicketsMoy As System.Windows.Forms.ColumnHeader
+    Friend WithEvents btn_return As System.Windows.Forms.Button
+    Friend WithEvents Label1 As System.Windows.Forms.Label
 End Class
