@@ -66,7 +66,7 @@ Partial Class adminMenu
         Me.bTicketsList.Name = "bTicketsList"
         Me.bTicketsList.Size = New System.Drawing.Size(210, 39)
         Me.bTicketsList.TabIndex = 1
-        Me.bTicketsList.Text = "Liste des tickets"
+        Me.bTicketsList.Text = "Liste des interventions"
         Me.bTicketsList.UseVisualStyleBackColor = True
         '
         'bHoursList

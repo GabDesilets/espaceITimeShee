@@ -40,14 +40,6 @@ Public Class ListeHeures
         panBtnExit.Controls.Add(exitButton.createExitBtn(Me))
     End Sub
 
-    Private Sub lvStudent_DoubleClick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lvStudent.DoubleClick
-        Dim li = lvStudent.FocusedItem.Tag
-
-        ' va chercher la valeur storer a ma colonne X Debug.WriteLine(li.SubItems(work_date.Index).Text)
-        Debug.WriteLine(li)
-    End Sub
-
-
     Private Sub btn_add_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_add.Click
         Me.Hide()
         other.Show()

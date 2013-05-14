@@ -52,7 +52,7 @@ Public Class FrmHeure
        
         rowId = lbl_hidden_row_id.Text
 
-        saveTime(
+        mOperations.saveTime(
                 Format(dtp_date.Value, "yyyy-MM-dd"),
                 tb_comment.Text,
                 DirectCast(cbCategories.SelectedItem, KeyValuePair(Of Integer, String)).Key.ToString(),
@@ -136,11 +136,4 @@ Public Class FrmHeure
         other.fillByWorkedDayBetweenDates(dtFrom, dtTo)
         other.Show()
     End Sub
-
-    Private Sub lbl_edit_success_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Dim labelToHide = CType(sender, Label)
-        labelToHide.Hide()
-    End Sub
-
-   
 End Class

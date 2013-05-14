@@ -102,7 +102,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="App.vb" />
-    <Compile Include="ClsLog.vb" />
     <Compile Include="exitButton.vb" />
     <Compile Include="FrmHeure.Designer.vb">
       <DependentUpon>FrmHeure.vb</DependentUpon>
@@ -117,6 +116,7 @@
     <Compile Include="ListeHeures.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="LogHook.vb" />
     <Compile Include="LoginForm.Designer.vb">
       <DependentUpon>LoginForm.vb</DependentUpon>
     </Compile>

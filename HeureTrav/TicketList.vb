@@ -1,6 +1,7 @@
 ﻿Public Class TicketList
-	Public Shared db As MySqlDB
+    Public Shared db As MySqlDB
 
+    'Constructeur de la class ticketList
 	Public Sub New
  		InitializeComponent()
         AddHandler FormClosed, Sub() amenu.Show()
@@ -10,6 +11,7 @@
 		Fill()
 	End Sub
 
+    'Methode qui remplie le datagridview dgList pour afficher les tickets
 	Public Sub Fill()
 		Dim query =	"SELECT question_states.name, work_categories.name, " &
 				"CONCAT(e.nom, ', ', e.prenom), CONCAT(s.nom, ', ', s.prenom), " &
@@ -20,17 +22,19 @@
 				"JOIN etudiant e ON e.id = questions.etu_id " &
 				"JOIN etudiant s ON s.id = questions.staff_id "
 
-		If Not txtSQuery.Text = "" And Not cboSColumn.SelectedItem Is Nothing Then
-			query &= "WHERE " & (New String() {
-				"question_states.name",
-				"work_categories.name",
-				"CONCAT(e.nom, ', ', e.prenom)",
-				"CONCAT(s.nom, ', ', s.prenom)",
-				"questions.question",
-				"questions.response"
-			})(cboSColumn.SelectedIndex) & " LIKE CONCAT('%', @0, '%')"
-		End If
+        If Not txtSQuery.Text = "" And Not cboSColumn.SelectedItem Is Nothing Then
+            'Array de string qui fais le lien entre la selection dans le combo box et la position des where (0..n)
+            query &= "WHERE " & (New String() {
+             "question_states.name",
+             "work_categories.name",
+             "CONCAT(e.nom, ', ', e.prenom)",
+             "CONCAT(s.nom, ', ', s.prenom)",
+             "questions.question",
+             "questions.response"
+            })(cboSColumn.SelectedIndex) & " LIKE CONCAT('%', @0, '%')"
+        End If
 
+        'Ajout les lignes au datagridview
 		dgList.Rows.Clear()
 		Using r = db.Query(query, txtSQuery.Text)
 			While r.Read()
@@ -46,6 +50,7 @@
 		End Using
 	End Sub
 
+    'Remplie un Array de string dans l'auto-completion du textbox de recherche
 	Public Sub FillAutocomplete(ix As Integer)
 		Dim query = (New String() {
 			"SELECT name FROM question_states",

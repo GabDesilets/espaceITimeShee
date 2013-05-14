@@ -7,6 +7,15 @@ Module mOperations
 
         If rowId <> "" Or checkIfWorkedToday(uid, work_day, hours) Then
 
+            If rowId IsNot Nothing Then
+                Dim prevHours = getPreviousHours(CInt(rowId))
+                LogHook.add(uid, "update", "Modification des heures de travail. Anciennes valeurs : " & prevHours.Item("hourFrom") & " - " & prevHours.Item("hourTo") & " Nouvelles valeurs : " & _
+                            hours.hourFrom & ":" & hours.minFrom & " - " & hours.hourTo & ":" & hours.minTo)
+            Else
+                LogHook.add(uid, "update", "Modification des heures de travail")
+            End If
+
+
             db.Command(
                 "UPDATE temps_travail set worked_hours = @0,comment = @1, categorie_id = @2,from_hour = @3 ,to_hour = @4,from_min = @5, to_min = @6 where work_day = @7 and etu_id = @8" &
                 " AND id = @9",
@@ -24,6 +33,7 @@ Module mOperations
 
         Else
 
+            LogHook.add(uid, "insert", "Ajout des heures dans la table temps_travail")
             db.Command(
                 "INSERT INTO temps_travail (etu_id, work_day,worked_hours, from_hour,to_hour,from_min,to_min,comment,categorie_id) " &
                 "VALUES(@0, @1, @2, @3, @4, @5, @6, @7, @8)",
@@ -115,6 +125,19 @@ Module mOperations
 
     Public Function getLastOfWeek(ByRef Dt As DateTime) As DateTime
         Return Dt.AddDays(-Dt.DayOfWeek + 6)
+    End Function
+
+    Public Function getPreviousHours(ByVal rowId As Integer) As Dictionary(Of String, String)
+        Dim prevHours As New Dictionary(Of String, String)
+        Dim r = db.Query("SELECT CONCAT_WS(':',LPAD(from_hour, 2, 00 ), LPAD(from_min, 2, 00 )) as hFrom , CONCAT_WS(':',LPAD(to_hour, 2, 00 ),LPAD(to_min, 2, 00 )) as hTo" &
+        " FROM(temps_travail)" &
+        " where id = @0", rowId)
+        r.Read()
+
+        prevHours.Add("hourFrom", CStr(r("hFrom")))
+        prevHours.Add("hourTo", String.Format("{00:00}", r("hTo")))
+        r.Close()
+        Return prevHours
     End Function
 
     Public Function getProgrammationHours(Optional ByVal dtFrom As String = Nothing, Optional ByVal dtTo As String = Nothing) As Dictionary(Of Integer, Decimal)
