@@ -11,7 +11,6 @@ Public Class FrmHeure
         uid = u
         userName = getUserNameById(uid)
         other = p
-
     End Sub
 
     Public worksHours As hoursManagement = New hoursManagement()
@@ -19,10 +18,13 @@ Public Class FrmHeure
         dtp_date.Value = DateTime.Now
         grBWorkHour.Text = userName
 
+        'Permet de binder les categories dans le combo box et les storer des cette facon : ID,Value
+        'La value est afficher et c'est le id que l'on prend comme valeur pour sauvegarder
         cbCategories.DataSource = New BindingSource(getCategories(), Nothing)
         cbCategories.DisplayMember = "Value"
         cbCategories.ValueMember = "Key"
 
+        Me.Text = "Entrée d'heure - " & userName
         panBtnExit.Controls.Add(exitButton.createExitBtn(Me))
 
     End Sub
@@ -66,10 +68,10 @@ Public Class FrmHeure
                 rowId
                 )
 
-        resetForm()
+        btn_return.PerformClick()
     End Sub
 
-
+    'Methode qui reinitialise les controles dependament de leur origine
     Private Sub resetForm()
         For Each ctrl As Control In grBWorkHour.Controls
             If TypeOf ctrl Is TextBox Then
@@ -103,24 +105,18 @@ Public Class FrmHeure
         Return ok
     End Function
 
+    'Empeche l'utilisateur de rentrer des lettres dans des champs numeric
     Private Sub worked_from_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles worked_hour_from.KeyPress, worked_hour_to.KeyPress, worked_min_from.KeyPress, worked_min_to.KeyPress
         e.Handled = Not (IsNumeric(e.KeyChar) Or Asc(e.KeyChar) = 46 Or Asc(e.KeyChar) = 8)
     End Sub
 
+    'Permet d'automatiser un tab pour aller au prochain input 
     Private Sub worked_hour_from_KeyUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles worked_hour_from.KeyUp, worked_hour_to.KeyUp, worked_min_from.KeyUp, worked_min_to.KeyUp
         Dim ctrl As Control = CType(sender, Control)
 
         If ctrl.Text.ToString.Length > 1 Then
             grBWorkHour.SelectNextControl(ctrl, True, True, True, True)
         End If
-    End Sub
-
-    Private Sub cbCategories_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbCategories.SelectedIndexChanged
-        ' might aswell comment everything...
-
-        ' Dim _key As Integer = DirectCast(cbCategories.SelectedItem, KeyValuePair(Of Integer, String)).Key
-        ' Dim _value As String = DirectCast(cbCategories.SelectedItem, KeyValuePair(Of Integer, String)).Value
-        ' MessageBox.Show([String].Format("Use selection of dictionary is:" & vbLf & "Key: {0}" & vbLf & "Value: {1}", _key, _value))
     End Sub
 
     Private Sub btn_return_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_return.Click

@@ -24,12 +24,23 @@ Public Class TicketForm
 			target.ValueMember = "Key"
 		End Sub
 
-		set_bind(cboStaff, Staff)
-		set_bind(cboUser, Users)
-		set_bind(cboCategory, Categories)
-		set_bind(cboState, States)
-	End Sub
+        If mOperations.getAdminLevelByUid(id) > 1 Then
+            set_bind(cboStaff, Staff)
+        Else
+            'Si c'est seulement un etudiant , il ne peu pas choisir les autres etudiants dans la listes. 
+            'Donc le combo box est rempli seulement avec ses informations 
+            'localDict sert a faire un dictionaire seulement pour cette etudiant sans avoir a changer la logique autour
+            Dim localDict = New Dictionary(Of Integer, String)
+            localDict.Add(id, Staff.Item(id))
+            set_bind(cboStaff, localDict)
+        End If
 
+        set_bind(cboUser, Users)
+        set_bind(cboCategory, Categories)
+        set_bind(cboState, States)
+    End Sub
+
+    'Methode qui initialise les controles dans la form
 	Public Sub Fill()
 		Dim fill_dict = Sub (dict As Dictionary(Of Integer, String), query As String, callback As Action(Of MySqlDataReader))
 			dict.Clear()

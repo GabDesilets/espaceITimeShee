@@ -1,4 +1,5 @@
-﻿Imports MySql.Data.MySqlClient
+﻿'Classe de base de donne MySql pour simplifier la gestion des requetes
+Imports MySql.Data.MySqlClient
 
 Public Class MySqlDB
     Implements IDisposable

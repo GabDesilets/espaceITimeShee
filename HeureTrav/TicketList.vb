@@ -1,54 +1,59 @@
 ﻿Public Class TicketList
     Public Shared db As MySqlDB
-
+    Public userId As Integer
     'Constructeur de la class ticketList
-	Public Sub New
- 		InitializeComponent()
+    Public Sub New(ByVal uid As Integer)
+        InitializeComponent()
         AddHandler FormClosed, Sub() amenu.Show()
-
-		cboSColumn.SelectedIndex = 0
-		FillAutocomplete(0)
-		Fill()
-	End Sub
+        userId = uid
+        cboSColumn.SelectedIndex = 0
+        FillAutocomplete(0)
+        Fill()
+    End Sub
 
     'Methode qui remplie le datagridview dgList pour afficher les tickets
 	Public Sub Fill()
-		Dim query =	"SELECT question_states.name, work_categories.name, " &
-				"CONCAT(e.nom, ', ', e.prenom), CONCAT(s.nom, ', ', s.prenom), " &
-				"questions.question, questions.response, questions.id " &
-				"FROM questions " &
-				"JOIN question_states ON question_states.id = questions.state " &
-				"JOIN work_categories ON work_categories.id = questions.categorie_id " &
-				"JOIN etudiant e ON e.id = questions.etu_id " &
-				"JOIN etudiant s ON s.id = questions.staff_id "
+        Dim query = "SELECT question_states.name, work_categories.name, " &
+          "CONCAT(e.nom, ', ', e.prenom), CONCAT(s.nom, ', ', s.prenom), " &
+          "questions.question, questions.response, questions.id " &
+          "FROM questions " &
+          "JOIN question_states ON question_states.id = questions.state " &
+          "JOIN work_categories ON work_categories.id = questions.categorie_id " &
+          "JOIN etudiant e ON e.id = questions.etu_id " &
+          "JOIN etudiant s ON s.id = questions.staff_id " &
+          "WHERE 1=1"
+
+        If mOperations.getAdminLevelByUid(userId) <= 1 Then
+            query &= " AND questions.staff_id = " & userId
+        End If
 
         If Not txtSQuery.Text = "" And Not cboSColumn.SelectedItem Is Nothing Then
             'Array de string qui fais le lien entre la selection dans le combo box et la position des where (0..n)
-            query &= "WHERE " & (New String() {
+            query &= " AND " & (New String() {
              "question_states.name",
              "work_categories.name",
              "CONCAT(e.nom, ', ', e.prenom)",
              "CONCAT(s.nom, ', ', s.prenom)",
              "questions.question",
              "questions.response"
-            })(cboSColumn.SelectedIndex) & " LIKE CONCAT('%', @0, '%')"
+            })(cboSColumn.SelectedIndex) & " LIKE CONCAT('%', @1, '%')"
         End If
 
         'Ajout les lignes au datagridview
-		dgList.Rows.Clear()
-		Using r = db.Query(query, txtSQuery.Text)
-			While r.Read()
-				dgList.Rows(dgList.Rows.Add(
-					r.GetValue(0),
-					r.GetValue(1),
-					r.GetValue(2),
-					r.GetValue(3),
-					r.GetValue(4),
-					r.GetValue(5)
-				)).Tag = r.GetValue(6)
-			End While
-		End Using
-	End Sub
+        dgList.Rows.Clear()
+        Using r = db.Query(query, txtSQuery.Text)
+            While r.Read()
+                dgList.Rows(dgList.Rows.Add(
+                 r.GetValue(0),
+                 r.GetValue(1),
+                 r.GetValue(2),
+                 r.GetValue(3),
+                 r.GetValue(4),
+                 r.GetValue(5)
+                )).Tag = r.GetValue(6)
+            End While
+        End Using
+    End Sub
 
     'Remplie un Array de string dans l'auto-completion du textbox de recherche
 	Public Sub FillAutocomplete(ix As Integer)
@@ -70,11 +75,14 @@
 	End Sub
 
 	Public Sub Add()
-		Dim dialog = New TicketForm(0)
+        Dim dialog = New TicketForm(userId)
 		If Not dialog.ShowDialog() = DialogResult.OK Then
 			Return
 		End If
-		
+        If dialog.timeEntryMin.Text = "" Then
+            dialog.timeEntryMin.Text = CStr(0)
+        End If
+
         db.Command(
           "INSERT INTO questions (etu_id, staff_id, state, categorie_id, response, " &
           "question, response_modified, question_modified,time_entry_min,program_number) " &
@@ -91,8 +99,8 @@
          dialog.tbProgramNumber.Text
          )
 
-		Fill()
-	End Sub
+        Fill()
+    End Sub
 
 	Public Sub Delete(id As Integer)
 		db.Command("DELETE FROM questions WHERE id = @0", ID)
@@ -174,5 +182,15 @@
     Private Sub btn_return_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_return.Click
         Me.Hide()
         amenu.Show()
+    End Sub
+
+
+    Private Sub TicketList_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Me.Text = "Liste des interventions "
+        If mOperations.getAdminLevelByUid(userId) <= 1 Then
+            cboSColumn.Hide()
+            bSAct.Hide()
+            txtSQuery.Hide()
+        End If
     End Sub
 End Class

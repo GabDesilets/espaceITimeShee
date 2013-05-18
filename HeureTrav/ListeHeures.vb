@@ -1,8 +1,6 @@
 ﻿Imports MySql.Data.MySqlClient
 Public Class ListeHeures
     Public Shared db As MySqlDB
-    Private Const STUDENT As Integer = 1
-    Private Const SUPER_USER As Integer = 2
     Public dateOfFirstDay As DateTime = getFirstOfWeek(DateTime.Now)
     Public dateOflastDay As DateTime = getLastOfWeek(DateTime.Now)
     Public uid, adminLvl As Integer, userName As String, other As FrmHeure
@@ -24,12 +22,14 @@ Public Class ListeHeures
             lvStudent.Columns.Add("Prenom", 90, HorizontalAlignment.Left).DisplayIndex = 1
             lvStudent.Size = New Size(810, 282)
         End If
+
         other = New FrmHeure(uid, Me)
-    
+
     End Sub
 
     Private Sub ListeHeures_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         lbl_title.Text = "Liste des heures de : " & userName
+        Me.Text = "Liste des heures travaillées"
         dateFrom.Value = dateOfFirstDay
         dateTo.Value = dateOflastDay
         Dim dtFrom As String = Format(dateOfFirstDay, "yyyy-MM-dd")
@@ -213,7 +213,7 @@ Public Class ListeHeures
     End Sub
 
     Private Sub checkAdminAccess(ByVal adminLvl As Integer)
-        If adminLvl < STUDENT Then
+        If adminLvl <= STUDENT Then
             txtSQuery.Hide()
             bSAct.Hide()
         End If
@@ -233,4 +233,8 @@ Public Class ListeHeures
         fillByWorkedDayBetweenDates(dfrom, dto)
     End Sub
 
+    Public Sub bReturn() Handles btn_return.Click
+        Me.Hide()
+        amenu.Show()
+    End Sub
 End Class

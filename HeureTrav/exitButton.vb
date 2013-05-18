@@ -1,4 +1,6 @@
-﻿Public Class exitButton
+﻿'Classe pour centraliser le bouton pour quitter l'application
+'Permet d'eviter de reecrire plusieurs fois pour rien la sortie de l'application
+Public Class exitButton
     Shared Function createExitBtn(ByVal target As Form) As Button
         ' Create a Button object 
         Dim exitBtn As New Button

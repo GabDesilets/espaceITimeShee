@@ -1,8 +1,9 @@
 ﻿Imports System.Windows.Forms
-
+'Module principale de l'application
 Module App
     Public amenu As adminMenu
-
+    Public Const STUDENT As Integer = 1
+    Public Const SUPER_USER As Integer = 2
     Public Sub Main()
         Dim db = New MySqlDB("Data Source=localhost;Database=sitemeut_espace-i2;User ID=root;Password=toor;")
 

@@ -2,7 +2,8 @@
 	Public Shared db As MySqlDB
 
 	Public Shared Function Prompt() As Integer
-		Dim d = New LoginForm()
+        Dim d = New LoginForm()
+        d.Text = "Connexion"
 
 		d.ShowDialog()
 
@@ -19,7 +20,7 @@
 
     Private Sub Login(sender As System.Object, e As System.EventArgs) Handles BLogin.Click
         Dim r = db.Query(
-         "SELECT id FROM etudiant WHERE login = @0 AND password = @1 LIMIT 1",
+         "SELECT id FROM etudiant WHERE login = @0 AND password = @1 AND admin > 0 LIMIT 1",
          TUser.Text,
          TPass.Text
          )

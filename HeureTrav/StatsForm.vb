@@ -27,6 +27,8 @@ Public Class StatsForm
         FillAutocomplete()
         fillStats(dfrom, dto)
 
+        Me.Text = "Statistique générale"
+
 
     End Sub
 
