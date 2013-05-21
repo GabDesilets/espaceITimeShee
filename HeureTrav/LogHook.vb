@@ -8,7 +8,7 @@ Module LogHook
         'Nom du fichier
         Dim fName = "\" & Format(DateTime.Today, "yyyy-MM-dd") & "-Journal d'activitie.txt"
 
-        'Directory n'existe pas on le cre
+        'Directory n'existe pas on le cree
         If (Not System.IO.Directory.Exists(dName)) Then
             System.IO.Directory.CreateDirectory(dName)
         End If

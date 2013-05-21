@@ -60,13 +60,13 @@ Public Class TicketForm
 			Categories.Add(CInt(r("id")), CStr(r("name")))
 		End Sub)
 
-		fill_dict(Users, "SELECT id, nom, prenom FROM etudiant WHERE admin = 0", Sub (r As MySqlDataReader)
-			Users.Add(CInt(r("id")), CStr(r("nom")) & ", " & CStr(r("prenom")))
-		End Sub)
+        fill_dict(Users, "SELECT id, nom, prenom FROM etudiant WHERE admin = 0", Sub(r As MySqlDataReader)
+                                                                                     Users.Add(CInt(r("id")), CStr(r("nom")) & ", " & CStr(r("prenom")))
+                                                                                 End Sub)
 
-		fill_dict(Staff, "SELECT id, nom, prenom FROM etudiant WHERE admin > 0", Sub (r As MySqlDataReader)
-			Staff.Add(CInt(r("id")), CStr(r("nom")) & ", " & CStr(r("prenom")))
-		End Sub)
+        fill_dict(Staff, "SELECT id, nom, prenom FROM etudiant WHERE admin >= 1", Sub(r As MySqlDataReader)
+                                                                                      Staff.Add(CInt(r("id")), CStr(r("nom")) & ", " & CStr(r("prenom")))
+                                                                                  End Sub)
 
         Using r = db.Query(
            "SELECT etu_id, staff_id, state, categorie_id, " &
