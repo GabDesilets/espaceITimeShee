@@ -21,6 +21,7 @@
             End Set
         End Property
 
+'ecrit les log
         Public Sub writeLog(ByVal text As String)
             If System.IO.File.Exists(dName & fName) = False Then
                 createDir(dName)
