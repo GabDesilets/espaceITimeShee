@@ -38,7 +38,7 @@
              "questions.response"
             })(cboSColumn.SelectedIndex) & " LIKE CONCAT('%', @1, '%')"
         End If
-
+        query &= " order by questions.question_modified desc "
         'Ajout les lignes au datagridview
         dgList.Rows.Clear()
         Using r = db.Query(query, txtSQuery.Text)
@@ -109,7 +109,7 @@
 	End Sub
 
 	Public Sub Modify(id As Integer)
-		Dim dialog = New TicketForm(id)
+        Dim dialog = New TicketForm(userId)
 		If Not dialog.ShowDialog() = DialogResult.OK Then
 			Return
 		End If

@@ -45,7 +45,7 @@ Partial Class StatsForm
         Me.lvStatsStudent.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.students, Me.progHours, Me.supHours, Me.totalHours, Me.nbTickets, Me.timeByTicketsMoy})
         Me.lvStatsStudent.Location = New System.Drawing.Point(145, 141)
         Me.lvStatsStudent.Name = "lvStatsStudent"
-        Me.lvStatsStudent.Size = New System.Drawing.Size(628, 199)
+        Me.lvStatsStudent.Size = New System.Drawing.Size(729, 199)
         Me.lvStatsStudent.TabIndex = 0
         Me.lvStatsStudent.UseCompatibleStateImageBehavior = False
         Me.lvStatsStudent.View = System.Windows.Forms.View.Details
@@ -57,17 +57,17 @@ Partial Class StatsForm
         '
         'progHours
         '
-        Me.progHours.Text = "Programmation"
-        Me.progHours.Width = 100
+        Me.progHours.Text = "Programmation(Heures)"
+        Me.progHours.Width = 133
         '
         'supHours
         '
-        Me.supHours.Text = "Support"
-        Me.supHours.Width = 84
+        Me.supHours.Text = "Support(Heures)"
+        Me.supHours.Width = 98
         '
         'totalHours
         '
-        Me.totalHours.Text = "Total"
+        Me.totalHours.Text = "Total(Heures)"
         Me.totalHours.Width = 78
         '
         'nbTickets
@@ -77,8 +77,8 @@ Partial Class StatsForm
         '
         'timeByTicketsMoy
         '
-        Me.timeByTicketsMoy.Text = "Temps moyen Intervention"
-        Me.timeByTicketsMoy.Width = 154
+        Me.timeByTicketsMoy.Text = "Temps moyen Intervention (min)"
+        Me.timeByTicketsMoy.Width = 193
         '
         'txtSQuery
         '

@@ -326,6 +326,7 @@ Partial Class TicketForm
         '
         Me.timeEntryMin.Dock = System.Windows.Forms.DockStyle.Left
         Me.timeEntryMin.Location = New System.Drawing.Point(653, 93)
+        Me.timeEntryMin.MaxLength = 3
         Me.timeEntryMin.Name = "timeEntryMin"
         Me.timeEntryMin.Size = New System.Drawing.Size(56, 20)
         Me.timeEntryMin.TabIndex = 22
@@ -356,6 +357,7 @@ Partial Class TicketForm
         '
         Me.tbProgramNumber.Dock = System.Windows.Forms.DockStyle.Fill
         Me.tbProgramNumber.Location = New System.Drawing.Point(478, 33)
+        Me.tbProgramNumber.MaxLength = 35
         Me.tbProgramNumber.Name = "tbProgramNumber"
         Me.tbProgramNumber.Size = New System.Drawing.Size(169, 20)
         Me.tbProgramNumber.TabIndex = 24

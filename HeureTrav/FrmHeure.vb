@@ -47,11 +47,19 @@ Public Class FrmHeure
         If Not _run_validation() Then
             Return
         End If
+        If CInt(worked_hour_from.Text) > CInt(worked_hour_to.Text) Then
+            MsgBox("Vous ne pouvez pas entrer une heure A plus petite que DE")
+            Return
+        End If
+        If (CInt(worked_hour_from.Text) + CInt(worked_min_from.Text)) - (CInt(worked_hour_to.Text) + CInt(worked_min_to.Text)) = 0 Then
+            MsgBox("Vous ne pouvez entrer deux entrer identique")
+            Return
+        End If
 
         If tb_comment.Text Is Nothing Then
             tb_comment.Text = ""
         End If
-       
+
         rowId = lbl_hidden_row_id.Text
 
         mOperations.saveTime(

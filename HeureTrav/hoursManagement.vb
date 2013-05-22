@@ -12,24 +12,20 @@ Public Class hoursManagement
     End Sub
 
     'Formule pour calculer le temps travailler entre les 2 periode
-    ' Si ex: DE 12:10 A 13:00 l'ecart est 50min , mais il faut avant 
-    ' tout faire ceci : minute A - minute DE (00-10) donc -10
-    ' Ensuite le maximum de minutes sur 1 heure - la valeur absolue obtenu precedement
-    ' donc 60-10 et finalement le total de tout ca diviser par 60
-    ' Pour avoir combien le total des minutes vaut sur une heure
+    ' Ex : 12:10 a 13:00
+    ' 60 - Abs(00-10) = 50
+    ' 13-12-1 car on a pas travailler 1h
+    ' sinon normal ex:
+    ' 12:00 a 14:30
+    ' 
     Public ReadOnly Property workedHours As Decimal
         Get
-            Dim minTot, hourTot As Decimal
+            Dim _to, from As Decimal
+            _to = minTo + hourTo * 60
+            from = minFrom + hourFrom * 60
 
-            If minTo < minFrom Then
-                minTot = (60 - Math.Abs(minTo - minFrom)) / 60D
-                hourTot = (hourTo - hourFrom) - 1
-            Else
-                minTot = (minTo - minFrom) / 60D
-                hourTot = hourTo - hourFrom
-            End If
-
-            Return hourTot + minTot
+            Return Math.Abs(_to - from) / 60D
+            
         End Get
     End Property
 

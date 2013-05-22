@@ -8,7 +8,7 @@ Module mOperations
     'Function qui enregistre ou met a jour la fiche de temps de travail
     Public Sub saveTime(ByVal work_day As String, ByVal comment As String, ByVal categorie_id As String, ByVal hours As hoursManagement, ByVal uid As Integer, ByVal rowId As String)
         'Update
-        If rowId <> "" Or checkIfWorkedToday(uid, work_day, hours) Then
+        If rowId <> "" Then
 
             'Enregistre l'action dans la table de log  pour garder une trace
             If rowId IsNot Nothing Then
@@ -21,7 +21,7 @@ Module mOperations
 
 
             db.Command(
-                "UPDATE temps_travail set worked_hours = @0,comment = @1, categorie_id = @2,from_hour = @3 ,to_hour = @4,from_min = @5, to_min = @6 where work_day = @7 and etu_id = @8" &
+                "UPDATE temps_travail set worked_hours = @0,comment = @1, categorie_id = @2,from_hour = @3 ,to_hour = @4,from_min = @5, to_min = @6 , work_day = @7 where etu_id = @8" &
                 " AND id = @9",
                    hours.workedHours,
                    comment,
@@ -36,6 +36,10 @@ Module mOperations
                        )
 
         Else
+            If checkIfWorkedToday(uid, work_day, hours) Then
+                MsgBox("Vous travaillez deja dans ces heures entrees")
+                Return
+            End If
             'Ajout
             LogHook.add(uid, "insert", "Ajout des heures dans la table temps_travail")
             db.Command(
@@ -75,8 +79,8 @@ Module mOperations
     'donc on evite le ligne illogique 
     'retourne true ou false si l'etudiant a travailler deja dans ces heures la ou non
     Private Function checkIfWorkedToday(ByVal studentId As Integer, ByVal workDate As String, ByVal hours As hoursManagement) As Boolean
-        Dim r = db.Query("SELECT id from temps_travail where etu_id = @0 and work_day = CAST(@1 as date) " &
-                         "AND from_hour = @2 AND to_hour = @3 AND from_min =  @4 and to_min = @5",
+        Dim r = db.Query("SELECT id from temps_travail where etu_id = @0 and work_day = @1 " &
+                         "AND (from_hour = @2 OR to_hour = @3) ",
                          studentId,
                          workDate,
                          hours.hourFrom,
